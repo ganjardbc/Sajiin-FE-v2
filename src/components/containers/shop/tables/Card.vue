@@ -1,12 +1,20 @@
 <template>
     <div id="App">
-        <div 
-            v-for="(dt, i) in data"
-            :key="i"
-            class="card box-shadow margin margin-top-15px margin-bottom-15px">
-            <div class="display-flex space-between align-center padding padding-top-5px padding-bottom-5px">
-                <div class="width width-80px margin marign-right-20px">
-                    <div class="image image-padding border border-full">
+        <div v-for="(dt, i) in data" :key="i" class="card box-shadow margin margin-top-15px margin-bottom-15px">
+            <div class="display-flex space-between margin margin-bottom-15px">
+                <div class="display-flex">
+                    <div style="margin-right: 10px;"><i class="fa fa-1x fa-th-large fonts orange"></i></div>
+                    <div>
+                        <div class="fonts fonts-11 semibold">{{ dt.table_id }}</div>
+                        <div class="fonts fonts-10 grey">{{ dt.created_at | moment("from", "now") }}</div>
+                    </div>
+                </div>
+                <AppCardCapsule :data="dt.status" class="margin margin-left-10px" />
+            </div>
+
+            <div class="display-flex space-between">
+                <div class="width width-80px margin marign-right-15px">
+                    <div class="image image-padding">
                         <img 
                             v-if="dt.image" 
                             :src="tableImageThumbnailUrl + dt.image" 
@@ -21,49 +29,74 @@
                         </button>
                     </div>
                 </div>
-                <div style="width: calc(100% - 100px);">
-                    <div class="fonts fonts-11 semibold">{{ dt.name }} ({{ dt.code }})</div>
-                    <div class="fonts fonts-10 grey overflow-ellipsis">{{ dt.description }}</div>
-                    <div class="fonts fonts-10 grey">{{ dt.created_at | moment("from", "now") }}</div>
+                <div style="width: calc(100% - 95px);">
+                    <div class="display-flex space-between">
+                        <div class="padding padding-right-15px" style="width: calc(100% - 55px);">
+                            <div class="fonts fonts-11 semibold">{{ dt.name }} ({{ dt.code }})</div>
+                            <AppCardCaption 
+                                icon="fa fa-lg fa-info-circle" 
+                                :caption="dt.description" />
+                        </div>
+                        <div class="width width-40px">
+                            <el-popover
+                                placement="bottom-end"
+                                width="180"
+                                trigger="click">
+                                <div class="width width-100">
+                                    <button 
+                                        class="btn btn-white btn-full btn-align-left"
+                                        @click="onEdit(dt)">
+                                        <i class="icn icn-left fa fa-lw fa-edit"></i> Edit 
+                                    </button>
+                                    <button 
+                                        class="btn btn-white btn-full btn-align-left"
+                                        @click="onDetail(dt)">
+                                        <i class="icn icn-left fa fa-lw fa-align-left"></i> Detail 
+                                    </button>
+                                    <button 
+                                        class="btn btn-white btn-full btn-align-left"
+                                        @click="onDelete(dt)">
+                                        <i class="icn icn-left fa fa-lw fa-trash-alt"></i> Delete
+                                    </button>
+                                </div>
+                                <button 
+                                    slot="reference"
+                                    class="btn btn-icon btn-sekunder ">
+                                    <i class="fa fa-lw fa-ellipsis-h"></i>
+                                </button>
+                            </el-popover>
+                        </div>
+                    </div>
+                    <div class="display-flex space-between padding padding-top-15px">
+                        <div class="fonts micro black">
+                            Change table status to {{ dt.status === 'active' ? 'Inactive' : 'Active' }} ?
+                        </div>
+                        <el-switch 
+                            v-model="dt.status"
+                            :active-value="'active'"
+                            :inactive-value="'inactive'"
+                            @change="onChangeStatus(dt)"></el-switch>
+                    </div>
                 </div>
             </div>
             <div class="display-flex space-between padding padding-top-15px">
-                <button 
-                    class="btn btn-sekunder btn-full"
-                    @click="onDetail(dt)">
-                    <i class="icn icn-left fa fa-lw fa-eye"></i> Detail Table
-                </button>
-                <el-popover
-                    placement="top-end"
-                    width="180"
-                    trigger="click">
-                    <div class="width width-100">
-                        <button 
-                            class="btn btn-white btn-full btn-align-left"
-                            @click="onEdit(dt)">
-                            <i class="icn icn-left fa fa-lw fa-edit"></i> Edit 
-                        </button>
-                        <button 
-                            class="btn btn-white btn-full btn-align-left"
-                            @click="onDelete(dt)">
-                            <i class="icn icn-left fa fa-lw fa-trash-alt"></i> Delete
-                        </button>
-                    </div>
-                    <button 
-                        slot="reference"
-                        class="btn btn-icon btn-sekunder margin margin-left-10px">
-                        <i class="fa fa-lw fa-ellipsis-h"></i>
-                    </button>
-                </el-popover>
+                
             </div>
         </div>
     </div>
 </template>
 <script>
+import AppCardCapsule from '../../../modules/AppCardCapsule'
+import AppCardCaption from '../../../modules/AppCardCaption'
+
 export default {
     name: 'App',
     props: {
         data: null,
+    },
+    components: {
+        AppCardCapsule,
+        AppCardCaption,
     },
     methods: {
         // COVER
@@ -84,6 +117,11 @@ export default {
         // DELETE
         onDelete (data) {
             this.$emit('onDelete', data)
+        },
+
+        // STATUS
+        onChangeStatus (data) {
+            this.$emit('onChangeStatus', data)
         }
     }
 }

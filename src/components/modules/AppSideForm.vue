@@ -1,26 +1,29 @@
 <template>
     <div id="AppSideForm" :class="isZoomed ? 'form-side zoomed' : 'form-side'">
-        <div class="fs-header display-flex justify-content align-center">
-            <div style="width: calc(100% - 90px); margin-left: 10px;">
-                <div class="fonts normal semibold">{{ title }}</div>
-            </div>
-            <div class="display-flex align-right" style="width: 150px;">
-                <button v-if="enableCreateButton" class="btn btn-icon btn-white" @click="onCreate" title="Create">
-                    <i class="fa fa-lw fa-plus" />
-                </button>
-                <button v-if="enableSaveButton" class="btn btn-icon btn-white" @click="onSave" title="Save">
-                    <i class="fa fa-lw fa-save" />
-                </button>
-                <!-- <button class="btn btn-icon btn-white" @click="onZoom" :title="isZoomed ? 'Minimize' : 'Maximize'">
-                    <i :class="isZoomed ? 'fa fa-lw fa-window-minimize' : 'fa fa-lw fa-window-maximize'" />
-                </button> -->
-                <button class="btn btn-icon btn-white" @click="onClose" title="Close">
-                    <i class="fa fa-lw fa-arrow-right" />
-                </button>
-            </div>
-        </div>
         <div class="fs-content">
-            <slot />
+            <div class="fs-header display-flex justify-content align-center">
+                <div style="width: calc(100% - 90px); margin-left: 10px;">
+                    <div class="fonts normal semibold">{{ title }}</div>
+                </div>
+                <div class="display-flex align-right" style="width: 150px;">
+                    <slot name="toolbar" />
+                    <button class="btn btn-icon btn-white" @click="onClose" title="Close">
+                        <i class="fa fa-lw fa-arrow-right" />
+                    </button>
+                </div>
+            </div>
+            <div class="fs-body">
+                <slot />
+            </div>
+            <div class="fs-footer">
+                <slot name="footer" />
+                <button 
+                    class="btn btn-main btn-full"
+                    :disabled="!enableSaveButton"
+                    @click="onSave" title="Save">
+                    Save
+                </button>
+            </div>
         </div>
     </div>
 </template>

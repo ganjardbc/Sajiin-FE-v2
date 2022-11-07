@@ -7,7 +7,7 @@
             <div>Notification</div>
             <button 
                 slot="reference"
-                class="btn btn-sekunder btn-icon btn-circle">
+                class="btn btn-white btn-icon btn-circle">
                 <i class="icn fa fa-lg fa-bell"></i>
             </button>
         </el-popover>

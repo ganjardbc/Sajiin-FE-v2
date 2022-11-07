@@ -34,6 +34,7 @@ export default {
         selectedData: '',
         filter: {
             search: '',
+            status: 'active',
         }
     },
 
@@ -109,6 +110,7 @@ export default {
                 limit: state.limit,
                 offset: state.offset,
                 search: state.filter.search,
+                status: state.filter.status,
             }
 
             return axios.post('/api/shop/getAll', params, { 

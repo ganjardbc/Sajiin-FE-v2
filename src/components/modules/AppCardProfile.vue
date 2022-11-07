@@ -27,8 +27,10 @@
             </div>
             <button 
                 slot="reference"
-                class="btn btn-sekunder btn-circle">
-                <i class="icn icn-left fa fa-lw fa-user"></i> {{ data && data.username }}
+                class="btn btn-white btn-circle">
+                <i class="icn icn-left fa fa-lw fa-user"></i> 
+                {{ data && data.username }}
+                <i class="icn icn-right fa fa-lw fa-caret-down"></i>
             </button>
         </el-popover>
 

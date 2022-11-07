@@ -27,6 +27,7 @@ import storeProduct from './modules/product'
 import storeProductDetail from './modules/productDetail'
 import storeProductImage from './modules/productImage'
 import storeTopping from './modules/topping'
+import storeOrders from './modules/orders'
 
 Vue.use(Vuex)
 
@@ -45,6 +46,7 @@ export default new Vuex.Store({
     storeProductDetail,
     storeProductImage,
     storeTopping,
+    storeOrders,
 
     // old store
     auth,

@@ -3,7 +3,7 @@ import axios from 'axios'
 const defaultForm = () => {
     return {
         id: '',
-        product_id: '',
+        order_id: '',
         image: '',
         name: '',
         description: '',
@@ -70,8 +70,8 @@ export default {
                 const time = new Date().getTime()
                 state.form = {
                     ...defaultForm(),
-                    product_id: `PR-${time}`,
-                    status: 'active',
+                    order_id: `INV-${time}`,
+                    status: 'confirmed',
                     is_available: 1
                 }
             }
@@ -114,14 +114,14 @@ export default {
                 shop_id: data.shop_id
             }
 
-            return axios.post('/api/product/getAll', params, { 
+            return axios.post('/api/order/getAll', params, { 
                     headers: { Authorization: data.token } 
                 })
                 .then((res) => {
                     const payload = res.data.data 
 
                     payload && payload.map((dt) => {
-                        dataPrev.push({ ...dt.product, details: dt.details })
+                        dataPrev.push({ ...dt })
                     })
 
                     commit('SET_DATA', dataPrev)
@@ -149,7 +149,7 @@ export default {
                 ...data
             }
 
-            return axios.post('/api/product/post', params, { 
+            return axios.post('/api/order/post', params, { 
                     headers: { Authorization: data.token } 
                 })
                 .then((res) => {
@@ -175,7 +175,7 @@ export default {
                 ...data
             }
 
-            return axios.post('/api/product/update', params, { 
+            return axios.post('/api/order/update', params, { 
                     headers: { Authorization: data.token } 
                 })
                 .then((res) => {
@@ -201,7 +201,7 @@ export default {
                 ...data
             }
 
-            return axios.post('/api/product/delete', params, { 
+            return axios.post('/api/order/delete', params, { 
                     headers: { Authorization: data.token } 
                 })
                 .then((res) => {
@@ -218,10 +218,10 @@ export default {
             commit('SET_LOADING_FORM', true)
     
             let params = new FormData()
-            params.append('product_id', data.product_id)
+            params.append('order_id', data.order_id)
             params.append('image', data.image)
     
-            return axios.post('/api/product/uploadImage', params, { 
+            return axios.post('/api/order/uploadImage', params, { 
                     headers: { Authorization: data.token } 
                 })
                 .then((res) => {

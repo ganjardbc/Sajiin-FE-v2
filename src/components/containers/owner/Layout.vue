@@ -9,7 +9,7 @@
                         </router-link>
                     </div>
                     <button 
-                        class="close-button btn btn-icon btn-sekunder btn-circle"
+                        class="close-button btn btn-icon btn-white btn-circle"
                         @click="onOpenSidebar">
                         <i class="fa fa-lg fa-times"></i>
                     </button>
@@ -26,13 +26,13 @@
                 <div class="header-content display-flex space-between align-center">
                     <div class="display-flex padding padding-left-15px padding-right-15px">
                         <button 
-                            class="close-button btn btn-sekunder btn-icon btn-circle margin margin-right-5px"
+                            class="close-button btn btn-white btn-icon btn-circle margin margin-right-5px"
                             @click="onOpenSidebar">
                             <i class="icn fa fa-lw fa-bars"></i>
                         </button>
-                        <AppCardNotification />
                     </div>
                     <div class="display-flex flex-end padding padding-left-15px padding-right-15px">
+                        <AppCardNotification />
                         <AppCardProfile :data.sync="dataUser" />
                     </div>
                 </div>
@@ -40,6 +40,9 @@
             <div class="main-content">
                 <div class="main-content-smalls">
                     <router-view />
+                </div>
+                <div class="display-flex center padding padding-20px">
+                    <div class="fonts fonts-10 grey align-center">App Version 1.0.0</div>
                 </div>
             </div>
         </div>

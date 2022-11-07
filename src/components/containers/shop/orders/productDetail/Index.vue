@@ -3,28 +3,28 @@
         id="App" 
         :class="formClass ? 'content-form' : 'content-form hide'">
         <div class="left">
-            <div class="display-flex space-between display-mobile margin margin-bottom-5px">
-                <div class="width width-75 width-mobile display-flex space-between">
-                    <h1 class="fonts big black bold">Tables</h1>
-                    <div class="display-flex">
-                        <button 
-                            class="btn btn-icon btn-white" 
-                            @click="onRefresh">
-                            <i class="fa fa-lw fa-retweet"></i>
-                        </button>
-                        <button 
-                            class="btn btn-icon btn-white" 
-                            @click="onCreate">
-                            <i class="fa fa-lw fa-plus" />
-                        </button>
-                    </div>
+            <div class="display-flex space-between margin margin-bottom-5px">
+                <h1 class="fonts big black bold">Varians</h1>
+                <div class="display-flex">
+                    <button 
+                        class="btn btn-icon btn-white" 
+                        @click="onRefresh">
+                        <i class="fa fa-lw fa-retweet"></i>
+                    </button>
+                    <button 
+                        v-if="typeFormProduct !== 'detail'"
+                        class="btn btn-icon btn-white" 
+                        @click="onCreate">
+                        <i class="fa fa-lw fa-plus" />
+                    </button>
                 </div>
-                <div class="width width-25 width-mobile">
-                    <SearchField 
-                        :placeholder="'Search tables ..'" 
-                        :enableResponsive="true" 
-                        :onChange="(data) => onSearch(data)" />
-                </div>
+            </div>
+
+            <div class="margin margin-bottom-15px">
+                <SearchField 
+                    :placeholder="'Search varians ..'" 
+                    :enableResponsive="true" 
+                    :onChange="(data) => onSearch(data)" />
             </div>
 
             <div 
@@ -36,8 +36,7 @@
                     @onChangeCover="uploadImage"
                     @onDetail="onDetail"
                     @onEdit="onEdit"
-                    @onDelete="onDelete"
-                    @onChangeStatus="onChangeStatus" />
+                    @onDelete="onDelete" />
                 <div class="width width-100 display-flex flex-end align-center padding padding-top-15px">
                     <div class="fonts fonts-10 normal black">Total {{ totalRecord }}</div>
                     <el-pagination
@@ -56,7 +55,6 @@
 
         <div class="right">
             <Form 
-                :title="formTitle" 
                 @uploadImage="uploadImage"
                 @removeImage="removeImage"
                 @onSave="onOpenVisibleConfirmed"
@@ -78,7 +76,7 @@
 
             <AppPopupConfirmed 
                 v-if="visibleConfirmedDelete"
-                :title="'Delete this table ?'"
+                :title="'Delete this varian ?'"
                 @onClickNo="onClickNoDelete"
                 @onClickYes="onClickYesDelete"
             />
@@ -99,12 +97,12 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import AppEmpty from '../../../modules/AppEmpty'
-import AppPopupLoader from '../../../modules/AppPopupLoader'
-import AppPopupConfirmed from '../../../modules/AppPopupConfirmed'
-import AppPopupAlert from '../../../modules/AppPopupAlert'
-import AppFileUpload from '../../../modules/AppFileUpload'
-import SearchField from '../../../modules/SearchField'
+import AppEmpty from '../../../../modules/AppEmpty'
+import AppPopupLoader from '../../../../modules/AppPopupLoader'
+import AppPopupConfirmed from '../../../../modules/AppPopupConfirmed'
+import AppPopupAlert from '../../../../modules/AppPopupAlert'
+import AppFileUpload from '../../../../modules/AppFileUpload'
+import SearchField from '../../../../modules/SearchField'
 import Form from './Form'
 import Card from './Card'
 
@@ -112,7 +110,6 @@ export default {
     name: 'App',
     data () {
         return {
-            formTitle: 'CREATE',
             formClass: false,
             visibleUpdateCover: false,
             visibleAlert: false,
@@ -125,6 +122,7 @@ export default {
         }
     },
     mounted () {
+        this.resetData()
         this.getData()
     },
     components: {
@@ -139,36 +137,38 @@ export default {
     },
     computed: {
         ...mapState({
-            filter: (state) => state.storeTable.filter,
-            form: (state) => state.storeTable.form,
-            data: (state) => state.storeTable.data,
-            totalRecord: (state) => state.storeTable.totalRecord,
-            limit: (state) => state.storeTable.limit,
-            loading: (state) => state.storeTable.loading,
-            loadingForm: (state) => state.storeTable.loadingForm,
+            formProduct: (state) => state.storeProduct.form,
+            filter: (state) => state.storeProductDetail.filter,
+            form: (state) => state.storeProductDetail.form,
+            data: (state) => state.storeProductDetail.data,
+            totalRecord: (state) => state.storeProductDetail.totalRecord,
+            limit: (state) => state.storeProductDetail.limit,
+            loading: (state) => state.storeProductDetail.loading,
+            loadingForm: (state) => state.storeProductDetail.loadingForm,
+            typeForm: (state) => state.storeProductDetail.typeForm,
+            typeFormProduct: (state) => state.storeProduct.typeForm,
         }),
-        shopId () {
-            return this.$store.state.storeSelectedShop.selectedData
-        }
-    },
-    watch: {
-        shopId (prevProps, nextProps) {
-            if (prevProps !== nextProps) {
-                this.getData()
+        typeForm: {
+            get () {
+                return this.$store.state.storeProductDetail.typeForm
+            },
+            set (value) {
+                this.$store.state.storeProductDetail.typeForm = value
             }
-        }
+        },
     },
     methods: {
         ...mapActions({
-            getTable: 'storeTable/getData',
-            setPagination: 'storeTable/setPagination',
-            resetFormData: 'storeTable/resetFormData',
-            resetFilter: 'storeTable/resetFilter',
-            setFormData: 'storeTable/setFormData',
-            createData: 'storeTable/createData',
-            updateData: 'storeTable/updateData',
-            deleteData: 'storeTable/deleteData',
-            uploadCover: 'storeTable/uploadCover',
+            getProductDetail: 'storeProductDetail/getData',
+            setPagination: 'storeProductDetail/setPagination',
+            resetFormData: 'storeProductDetail/resetFormData',
+            resetFilter: 'storeProductDetail/resetFilter',
+            setFormData: 'storeProductDetail/setFormData',
+            createData: 'storeProductDetail/createData',
+            updateData: 'storeProductDetail/updateData',
+            deleteData: 'storeProductDetail/deleteData',
+            uploadCover: 'storeProductDetail/uploadCover',
+            resetData: 'storeProductDetail/resetData',
         }),
         onSearch (data) {
             this.filter.search = data 
@@ -185,8 +185,8 @@ export default {
         // LIST DATA
         getData () {
             const token = this.$session.get('tokenBearer')
-            const shop_id = this.shopId
-            this.getTable({ token, shop_id })
+            const product_id = this.formProduct.product_id 
+            this.getProductDetail({ token: token, product_id: product_id })
         },
         handleCurrentChange (value) {
             this.setPagination(value)
@@ -209,10 +209,11 @@ export default {
         onClickYes () {
             this.visibleConfirmed = false 
             const token = this.$session.get('tokenBearer')
-            switch (this.formTitle) {
-                case 'CREATE':
+            switch (this.typeForm) {
+                case 'create':
                     this.createData({
                         ...this.form,
+                        product_id: this.formProduct.id,
                         token: token
                     }).then((res) => {
                         const status = res.data.status 
@@ -221,13 +222,14 @@ export default {
                             this.getData()
                         } else {
                             this.visibleAlert = true 
-                            this.titleAlert = 'Failed to save this table'
+                            this.titleAlert = 'Failed to save this varian'
                         }
                     })
                     break
-                case 'EDIT':
+                case 'edit':
                     this.updateData({
                         ...this.form,
+                        product_id: this.formProduct.id,
                         token: token
                     }).then((res) => {
                         const status = res.data.status 
@@ -236,7 +238,7 @@ export default {
                             this.getData()
                         } else {
                             this.visibleAlert = true 
-                            this.titleAlert = 'Failed to edit this table'
+                            this.titleAlert = 'Failed to edit this varian'
                         }
                     })
                     break
@@ -246,12 +248,12 @@ export default {
         // SAVE
         onOpenVisibleConfirmed () {
             this.visibleConfirmed = true
-            switch (this.formTitle) {
-                case 'CREATE':
-                    this.titleConfirmed = 'Save this table ?'
+            switch (this.typeForm) {
+                case 'create':
+                    this.titleConfirmed = 'Save this varian ?'
                     break
-                case 'EDIT':
-                    this.titleConfirmed = 'Edit this table ?'
+                case 'edit':
+                    this.titleConfirmed = 'Edit this varian ?'
                     break
             }
         },
@@ -259,7 +261,7 @@ export default {
         // CREATE
         onCreate () {
             this.formClass = true
-            this.formTitle = 'CREATE'
+            this.typeForm = 'create'
             this.resetFormData()
             this.form.shop_id = this.shopId
         },
@@ -267,7 +269,7 @@ export default {
         // DETAIL
         onDetail (data) {
             this.formClass = true
-            this.formTitle = 'DETAIL'
+            this.typeForm = 'detail'
             this.resetFormData()
             this.setFormData(data)
             console.log(data)
@@ -276,7 +278,7 @@ export default {
         // EDIT
         onEdit (data) {
             this.formClass = true
-            this.formTitle = 'EDIT'
+            this.typeForm = 'edit'
             this.resetFormData()
             this.setFormData(data)
         },
@@ -301,7 +303,7 @@ export default {
                     this.getData()
                 } else {
                     this.visibleAlert = true 
-                    this.titleAlert = 'Failed to delete this table'
+                    this.titleAlert = 'Failed to delete this varian'
                 }
             })
         },
@@ -334,23 +336,6 @@ export default {
                 }
             })
         },
-
-        // STATUS
-        onChangeStatus (data) {
-            this.setFormData(data)
-            const token = this.$session.get('tokenBearer')
-            this.updateData({
-                ...this.form,
-                token: token
-            }).then((res) => {
-                const status = res.data.status 
-                if (status === 'ok') {
-                    this.$message(`Success changed status for table ${data.name}.`);
-                } else {
-                    this.$message(`Failed to change status for table ${data.name}.`);
-                }
-            })
-        }
     }
 }
 </script>

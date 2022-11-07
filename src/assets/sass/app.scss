@@ -517,11 +517,12 @@ a {
             right: 0;
             width: calc(100% - 370px);
             padding: 40px;
+            padding-bottom: 0;
             padding-left: 330px;
             @media (max-width: $min-width) {
                 padding: 15px;
                 padding-top: 70px;
-                padding-bottom: 50px;
+                padding-bottom: 0;
                 width: calc(100% - 30px);
             }
         }
@@ -712,11 +713,15 @@ a {
         border-radius: 0;
     }
     .fs-header {
-        position: relative;
+        position: sticky;
+        top: 0;
         width: calc(100% - 20px);
         height: 40px;
         padding: 10px;
-        // border-bottom: $border;
+        background-color: #fff;
+        z-index: 1;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
         .fs-header-content {
             width: calc(100% - 20px);
             height: 30px;
@@ -725,13 +730,26 @@ a {
     }
     .fs-content {
         position: relative;
-        width: calc(100% - 40px);
-        height: calc(100vh - 110px);
-        padding: 10px 20px;
+        width: 100%;
+        height: calc(100vh - 30px);
         overflow-y: auto;
         @media (max-width: $min-width) {
-            height: calc(100vh - 80px);
+            height: 100vh;
         }
+    }
+    .fs-body {
+        position: relative;
+        width: calc(100% - 40px);
+        padding: 0 20px;
+    }
+    .fs-footer {
+        position: sticky;
+        background-color: #fff;
+        width: calc(100% - 40px);
+        padding: 20px;
+        bottom: 0;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
     }
     &.zoomed {
         position: absolute;

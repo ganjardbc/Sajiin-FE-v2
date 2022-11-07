@@ -3,27 +3,28 @@
         id="App" 
         :class="formClass ? 'content-form' : 'content-form hide'">
         <div class="left">
-            <div class="display-flex space-between margin margin-bottom-5px">
-                <h1 class="fonts big black bold">Products</h1>
-                <div class="display-flex">
-                    <button 
-                        class="btn btn-icon btn-white" 
-                        @click="onRefresh">
-                        <i class="fa fa-lw fa-retweet"></i>
-                    </button>
-                    <button 
-                        class="btn btn-icon btn-white" 
-                        @click="onCreate">
-                        <i class="fa fa-lw fa-plus" />
-                    </button>
+            <div class="display-flex space-between display-mobile margin margin-bottom-5px">
+                <div class="width width-75 width-mobile display-flex space-between">
+                    <h1 class="fonts big black bold">Products</h1>
+                    <div class="display-flex">
+                        <button 
+                            class="btn btn-icon btn-white" 
+                            @click="onRefresh">
+                            <i class="fa fa-lw fa-retweet"></i>
+                        </button>
+                        <button 
+                            class="btn btn-icon btn-white" 
+                            @click="onCreate">
+                            <i class="fa fa-lw fa-plus" />
+                        </button>
+                    </div>
                 </div>
-            </div>
-
-            <div class="margin margin-bottom-15px">
-                <SearchField 
-                    :placeholder="'Search products ..'" 
-                    :enableResponsive="true" 
-                    :onChange="(data) => onSearch(data)" />
+                <div class="width width-25 width-mobile">
+                    <SearchField 
+                        :placeholder="'Search products ..'" 
+                        :enableResponsive="true" 
+                        :onChange="(data) => onSearch(data)" />
+                </div>
             </div>
 
             <div 
@@ -35,7 +36,9 @@
                     @onChangeCover="uploadImage"
                     @onDetail="onDetail"
                     @onEdit="onEdit"
-                    @onDelete="onDelete" />
+                    @onDelete="onDelete"
+                    @onChangeProductStatus="onChangeProductStatus"
+                    @onChangeVarianStatus="onChangeVarianStatus" />
                 <div class="width width-100 display-flex flex-end align-center padding padding-top-15px">
                     <div class="fonts fonts-10 normal black">Total {{ totalRecord }}</div>
                     <el-pagination
@@ -143,6 +146,7 @@ export default {
             loading: (state) => state.storeProduct.loading,
             loadingForm: (state) => state.storeProduct.loadingForm,
             typeForm: (state) => state.storeProduct.typeForm,
+            formVarian: (state) => state.storeProductDetail.form,
         }),
         typeForm: {
             get () {
@@ -174,6 +178,9 @@ export default {
             updateData: 'storeProduct/updateData',
             deleteData: 'storeProduct/deleteData',
             uploadCover: 'storeProduct/uploadCover',
+            setLoadingForm: 'storeProduct/setLoadingForm',
+            updateDataVarian: 'storeProductDetail/updateData',
+            setFormDataVarian: 'storeProductDetail/setFormData',
         }),
         onSearch (data) {
             this.filter.search = data 
@@ -338,6 +345,41 @@ export default {
                 }
             })
         },
+
+        // STATUS
+        onChangeProductStatus (data) {
+            this.setFormData(data)
+            const token = this.$session.get('tokenBearer')
+            this.updateData({
+                ...this.form,
+                token: token
+            }).then((res) => {
+                const status = res.data.status 
+                if (status === 'ok') {
+                    this.$message(`Success changed status for product ${data.name}.`);
+                } else {
+                    this.$message(`Failed to change status for product ${data.name}.`);
+                }
+            })
+        },
+        onChangeVarianStatus (data) {
+            this.setLoadingForm(true)
+            this.setFormDataVarian(data)
+            const token = this.$session.get('tokenBearer')
+            this.updateDataVarian({
+                ...this.formVarian,
+                token: token
+            }).then((res) => {
+                const status = res.data.status 
+                if (status === 'ok') {
+                    this.$message(`Success changed status for varian ${data.name}.`);
+                } else {
+                    this.$message(`Failed to change status for varian ${data.name}.`);
+                }
+            }).finally(() => {
+                this.setLoadingForm(false)
+            })
+        }
     }
 }
 </script>
