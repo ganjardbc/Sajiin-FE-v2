@@ -5,7 +5,7 @@
         <div class="left">
             <div class="display-flex space-between display-mobile margin margin-bottom-15px">
                 <div class="width width-75 width-mobile display-flex space-between">
-                    <h1 class="fonts big black bold">Orders</h1>
+                    <h1 class="fonts big black bold">Order Lists</h1>
                     <div class="display-flex">
                         <button 
                             class="btn btn-icon btn-white" 
@@ -31,20 +31,20 @@
                 :selectedIndex.sync="selectedIndex" 
                 :data="tabs" 
                 :onChange="(data) => onChangeTabs(data)"
-                class="width width-500px margin margin-bottom-20px" />
+                class="width width-400px width-mobile margin margin-bottom-20px" />
 
-            <div 
-                v-loading="loading" 
-                class="margin margin-bottom-15px">
-                <AppEmpty v-if="!loading && data.length === 0" />
-                <Card 
-                    :data.sync="data"
-                    @onChangeCover="uploadImage"
-                    @onDetail="onDetail"
-                    @onEdit="onEdit"
-                    @onDelete="onDelete"
-                    @onChangeProductStatus="onChangeProductStatus"
-                    @onChangeVarianStatus="onChangeVarianStatus" />
+            <div class="width width-100">
+                <div v-loading="loading">
+                    <AppEmpty v-if="!loading && data.length === 0" />
+                    <Card 
+                        :data.sync="data"
+                        @onChangeCover="uploadImage"
+                        @onDetail="onDetail"
+                        @onEdit="onEdit"
+                        @onDelete="onDelete"
+                        @onChangeProductStatus="onChangeProductStatus"
+                        @onChangeVarianStatus="onChangeVarianStatus" />
+                </div>
                 <div class="width width-100 display-flex flex-end align-center padding padding-top-15px">
                     <div class="fonts fonts-10 normal black">Total {{ totalRecord }}</div>
                     <el-pagination

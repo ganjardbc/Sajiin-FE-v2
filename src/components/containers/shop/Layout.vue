@@ -16,10 +16,16 @@
                 </div>
             </div>
             <div class="content">
+                <!-- <div class="padding padding-10px">
+                    <SelectShopField />
+                </div> -->
                 <AppListMenu 
                     :data.sync="sidebar"
                     :isSidebarSmall="true" />
             </div>
+            <!-- <div class="footer">
+                <AppCardProfile :data.sync="dataUser" />
+            </div> -->
         </div>
         <div class="main">
             <div class="header header-double-mobile">
@@ -86,12 +92,12 @@ const defaultSidebar = [
     {
         icon: 'fa fa-lg fa-database', label: 'CASHIER', value: 0, disableMenu: false, menu: [
             {icon: 'fa fa-lg fa-laptop', label: 'Cashier', value: 0, link: 'shop-cashier', permission: 'cashier'},
-            {icon: 'fa fa-lg fa-book-open', label: 'Cash Books', value: 0, link: 'shop-cash-book', permission: 'users'},
+            // {icon: 'fa fa-lg fa-book-open', label: 'Cash Books', value: 0, link: 'shop-cash-book', permission: 'users'},
         ]
     },
     {
         icon: 'fa fa-lg fa-database', label: 'ORDER', value: 0, disableMenu: false, menu: [
-            {icon: 'fa fa-lg fa-list-ul', label: 'Orders', value: 0, link: 'shop-orders', permission: 'orders'},
+            {icon: 'fa fa-lg fa-list-ul', label: 'Order Lists', value: 0, link: 'shop-orders', permission: 'orders'},
             {icon: 'fa fa-lg fa-calendar', label: 'Reports', value: 0, link: 'shop-reports', permission: 'users'},
         ]
     },

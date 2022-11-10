@@ -81,9 +81,14 @@ export default {
         }
     },
     watch: {
-        maximumValue: function (props) {
+        maximumValue (props) {
             if (props) {
                 this.maxValue = parseInt(props)
+            }
+        },
+        value (props) {
+            if (props) {
+                this.quantitySelected = props ? props : 0
             }
         }
     }

@@ -9,14 +9,14 @@
             <div class="width width-30 width-mobile" style="margin-bottom: 30px;">
                 <div class="card no-padding-mobile box-shadow bg-white">
                     <div class="content-center margin margin-bottom-20px">
-                        <div class="image image-padding" style="margin: auto; text-align: center;">
+                        <div class="image image-padding image-circle" style="margin: auto; text-align: center;">
                             <i 
                                 v-if="!getImage" 
                                 class="post-middle-absolute fonts font-32 grey fa fa-lg fa-user-circle" />
                             <img v-else :src="getImage" alt="">
                             <button 
                                 class="btn btn-sekunder btn-icon btn-circle" 
-                                style="position: absolute; bottom: 10px; right: 10px;" 
+                                style="position: absolute; bottom: 40px; right: 40px;" 
                                 @click="onButtonUpload">
                                 <i class="post-center fonts fonts-11 grey fa fa-lg fa-camera" />
                             </button>

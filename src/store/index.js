@@ -28,6 +28,9 @@ import storeProductDetail from './modules/productDetail'
 import storeProductImage from './modules/productImage'
 import storeTopping from './modules/topping'
 import storeOrders from './modules/orders'
+import storeCashier from './modules/cashier/index'
+import storeCashierCategory from './modules/cashier/category'
+import storeCashierProduct from './modules/cashier/product'
 
 Vue.use(Vuex)
 
@@ -47,6 +50,9 @@ export default new Vuex.Store({
     storeProductImage,
     storeTopping,
     storeOrders,
+    storeCashier,
+    storeCashierCategory,
+    storeCashierProduct,
 
     // old store
     auth,

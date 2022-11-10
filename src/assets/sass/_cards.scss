@@ -130,6 +130,35 @@
             overflow-y: auto;
         }
     }
+    &.card-status {
+        &:hover {
+            cursor: pointer
+        }
+        &.normal {
+            background-color: $white;
+            border: 0.1px $white-grey solid;
+        }
+        &.active {
+            background-color: rgba($color: $teal, $alpha: 0.1);
+            color: $green;
+            border: 0.1px $green solid;
+        }
+        &.inactive {
+            background-color: rgba($color: $pink, $alpha: 0.1);
+            color: $red;
+            border: 0.1px $red solid;
+        }
+        &.wip {
+            background-color: rgba($color: $yellow, $alpha: 0.1);
+            color: $orange;
+            border: 0.1px $orange solid;
+        }
+        &.todo {
+            background-color: rgba($color: $white-grey, $alpha: 0.5);
+            color: $grey;
+            border: 0.1px $white-grey solid;
+        }
+    }
 }
 
 .card-container-popup {
@@ -379,10 +408,6 @@
         background-color: rgba($color: #fff, $alpha: 1);
         color: $grey;
         border: 0.1px $tiny-grey solid;
-        &:hover {
-            color: $black;
-            border: 0.1px $grey solid;
-        }
     }
     &:disabled {
         background-color: $white-grey !important;
@@ -747,7 +772,7 @@
     width: 350px;
     @media (max-width: $min-width) {
         width: calc(100% - 40px);
-        bottom: 70px;
+        bottom: 20px;
     }
 }
 

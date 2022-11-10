@@ -73,7 +73,9 @@ a {
     &.btn-main-reverse {
         background-color: #fff;
         color: $main-color;
-        // border: 1px $main-color solid;
+        &.with-border {
+            border: 1px $main-color solid;
+        }
         &.with-hover {
             &:hover {
                 background-color: #f5f5f5;

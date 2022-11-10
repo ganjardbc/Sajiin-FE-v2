@@ -1,7 +1,7 @@
 <template>
     <div id="App">
         <el-popover
-            placement="bottom-start"
+            placement="bottom-end"
             width="250"
             trigger="click">
             <div>Notification</div>

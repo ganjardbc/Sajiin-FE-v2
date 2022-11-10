@@ -20,7 +20,7 @@
                     </div>
                     <div class="width width-50">
                         <div class="fonts fonts-9 normal grey">Payment Status</div>
-                        <div class="fonts fonts-10 semibold orange">{{ dt.order.payment_status ? 'Paid' : 'Unpaid' }}</div>
+                        <div class="fonts fonts-10 semibold">{{ dt.order.payment_status ? 'Paid' : 'Unpaid' }}</div>
                     </div>
                 </div>
                 <div class="width width-50 width-mobile display-flex margin margin-top-5px margin-bottom-5px">
@@ -65,16 +65,16 @@
 
                         <div class="width width-100 padding padding-top-15px">
                             <div class="display-flex space-between">
-                                <div class="fonts fonts-9 normal grey">Price</div>
+                                <div class="fonts fonts-10 normal grey">Price</div>
                                 <div class="fonts fonts-10 semibold black">Rp. {{ detail.price }}</div>
                             </div>
                             <div class="display-flex space-between">
-                                <div class="fonts fonts-9 normal grey">Quantity</div>
+                                <div class="fonts fonts-10 normal grey">Quantity</div>
                                 <div class="fonts fonts-10 semibold black">{{ detail.quantity }} products</div>
                             </div>
                             <div class="padding padding-bottom-10px margin margin-bottom-10px border-bottom"></div>
                             <div class="display-flex space-between">
-                                <div class="fonts fonts-9 normal grey">Subtotal</div>
+                                <div class="fonts fonts-10 normal grey">Subtotal</div>
                                 <div class="fonts fonts-10 semibold orange">Rp. {{ detail.subtotal }}</div>
                             </div>
                         </div>

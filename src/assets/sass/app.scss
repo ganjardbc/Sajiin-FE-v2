@@ -435,6 +435,7 @@ a {
         z-index: 100;
         background-color: #fff;
         box-shadow: $shadow;
+        overflow-y: auto;
         @include animate_1();
         @media (max-width: $min-width) {
             position: fixed;
@@ -444,7 +445,8 @@ a {
             z-index: 200;
         }
         .header {
-            position: relative;
+            position: sticky;
+            top: 0;
             padding: 0 15px;
             width: calc(100% - 30px);
             height: 60px;
@@ -452,6 +454,7 @@ a {
             display: flex;
             justify-content: flex-start;
             align-items: center;
+            z-index: inherit;
             .header-content {
                 width: 100%;
                 .logo {
@@ -463,9 +466,17 @@ a {
         .content {
             position: relative;
             width: 100%;
-            height: calc(100% - 60px);
-            overflow-x: hidden;
-            overflow-y: auto;
+        }
+        .footer {
+            position: sticky;
+            bottom: 0;
+            padding: 0 15px;
+            width: calc(100% - 30px);
+            height: 60px;
+            background-color: #fff;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
         }
         &.show {
             @media (max-width: $min-width) {
@@ -496,6 +507,7 @@ a {
                 background-color: #fff;
                 box-shadow: $shadow;
                 z-index: 100;
+                border-radius: 8px;
                 @media (max-width: $min-width) {
                     top: 0;
                     right: 0;
@@ -684,12 +696,21 @@ a {
         right: 0;
         width: 400px;
         height: 100vh;
-        border-left: $border;
         background-color: #fff;
-        z-index: 100;
+        overflow-y: auto;
         @media (max-width: $min-width) {
             display: none;
         }
+    }
+    .right-form-body {
+        position: relative;
+        width: 100%;
+    }
+    .right-form-footer {
+        position: sticky;
+        width: 100%;
+        bottom: 0;
+        background-color: #fff;
     }
     .set-padding {
         position: relative;
@@ -701,6 +722,7 @@ a {
 .form-side {
     position: absolute;
     width: 100%;
+    height: calc(100vh - 30px);
     top: 0;
     right: 0;
     margin: 15px;
@@ -708,7 +730,9 @@ a {
     transition: 0.2s;
     box-shadow: $shadow-bold;
     border-radius: 15px;
+    overflow-y: auto;
     @media (max-width: $min-width) {
+        height: 100vh;
         margin: 0;
         border-radius: 0;
     }
@@ -731,8 +755,6 @@ a {
     .fs-content {
         position: relative;
         width: 100%;
-        height: calc(100vh - 30px);
-        overflow-y: auto;
         @media (max-width: $min-width) {
             height: 100vh;
         }
@@ -858,6 +880,9 @@ a {
 }
 .border-small-radius {
     border-radius: 4px;
+}
+.border-big-radius {
+    border-radius: 45px;
 }
 .border-full {
     border: $border;

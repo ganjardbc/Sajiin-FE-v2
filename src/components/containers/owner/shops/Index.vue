@@ -27,18 +27,18 @@
                 </div>
             </div>
 
-            <div 
-                v-loading="loading" 
-                class="margin margin-bottom-15px">
-                <AppEmpty v-if="!loading && data.length === 0" />
-                <Card 
-                    :data.sync="data"
-                    @onChangeCover="uploadImage"
-                    @onDetail="onDetail"
-                    @onEdit="onEdit"
-                    @onDelete="onDelete"
-                    @onManage="onManage"
-                    @onChangeStatus="onChangeStatus" />
+            <div class="width width-100">
+                <div v-loading="loading">
+                    <AppEmpty v-if="!loading && data.length === 0" />
+                    <Card 
+                        :data.sync="data"
+                        @onChangeCover="uploadImage"
+                        @onDetail="onDetail"
+                        @onEdit="onEdit"
+                        @onDelete="onDelete"
+                        @onManage="onManage"
+                        @onChangeStatus="onChangeStatus" />
+                </div>
                 <div class="width width-100 display-flex flex-end align-center padding padding-top-15px">
                     <div class="fonts fonts-10 normal black">Total {{ totalRecord }}</div>
                     <el-pagination

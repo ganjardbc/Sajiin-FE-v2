@@ -3,7 +3,7 @@
         <button v-if="isScrollable" class="tabs-button" @click="toLeft(path ? path : 'nav-topic')">
             <i class="fa fa-lg fa-angle-left" />
         </button>
-        <ul :class="isFull ? 'tabs-content full' : 'tabs-content full'" :id="path ? path : 'nav-topic'">
+        <ul :class="'tabs-content full'" :id="path ? path : 'nav-topic'">
             <li 
                 v-for="(dt, index) in datas" 
                 :key="index" 

@@ -34,6 +34,10 @@
             </button>
         </el-popover>
 
+        <!-- <button class="btn btn-icon btn-circle btn-white" @click="onLogout">
+            <i class="icn fa fa-lw fa-power-off"></i>
+        </button> -->
+
         <AppPopupConfirmed 
             v-if="visibleConfirmedLogout"
             :title="'Logout from your account ?'"
