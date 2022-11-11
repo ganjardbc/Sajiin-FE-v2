@@ -3,19 +3,11 @@ import axios from 'axios'
 const defaultForm = () => {
     return {
         id: '',
-        shop_id: '',
+        payment_id: '',
         image: '',
         name: '',
-        about: '',
-        email: '',
-        phone: '',
-        location: '',
-        open_day: '',
-        close_day: '',
-        open_time: '',
-        close_time: '',
-        status: '',
-        is_available: ''
+        status: 'active',
+        description: ''
     }
 }
 
@@ -29,20 +21,15 @@ export default {
         offset: 0,
         totalRecord: 0,
         loading: false,
-        loadMore: false,
+        typeForm: 'create',
         data: [],
-        selectedData: '',
         filter: {
             search: '',
             status: 'active',
         }
     },
 
-    getters: {
-        getSelectedData (state) {
-            return state.data.find((item) => item.id === state.selectedData)
-        },
-    },
+    getters: {},
 
     mutations: {
         RESET_ERROR_MESSAGE (state) {
@@ -51,37 +38,11 @@ export default {
         SET_LOADING (state, value) {
             state.loading = value
         },
-        SET_LOAD_MORE (state, value) {
-            state.loadMore = value
-        },
         SET_OFFSET (state, value) {
             state.offset += value
         },
         SET_DATA (state, value) {
             state.data = value
-        },
-        SET_SELECTED_DATA (state, value) {
-            state.selectedData = value 
-        },
-        SET_MESSAGE_DATA (state, value) {
-            if (value) {
-                state.errorMessage = value 
-            } else {
-                state.errorMessage = defaultForm() 
-            }
-        },
-        SET_FORM_DATA (state, value) {
-            if (value) {
-                state.form = value
-            } else {
-                const time = new Date().getTime()
-                state.form = {
-                    ...defaultForm(),
-                    shop_id: `SH-${time}`,
-                    status: 'active',
-                    is_available: 1
-                }
-            }
         },
         SET_TOTAL_RECORD (state, value) {
             state.totalRecord = value
@@ -96,9 +57,6 @@ export default {
         setFormData ({ commit, state }, data) {
             commit('SET_FORM_DATA', data)
         },
-        setSelectedData ({ commit, state }, data) {
-            commit('SET_SELECTED_DATA', parseInt(data))
-        },
         resetFormData ({ commit, state }) {
             commit('SET_FORM_DATA', null)
             commit('SET_MESSAGE_DATA', null)
@@ -109,7 +67,6 @@ export default {
         },
         getData ({ commit, state }, data) {
             commit('SET_LOADING', true)
-            commit('SET_LOAD_MORE', false)
 
             let dataPrev = []
 
@@ -120,28 +77,18 @@ export default {
                 status: state.filter.status,
             }
 
-            return axios.post('/api/shop/getAll', params, { 
+            return axios.post('/api/payment/getAll', params, { 
                     headers: { Authorization: data.token } 
                 })
                 .then((res) => {
                     const payload = res.data.data 
 
                     payload && payload.map((dt) => {
-                        dataPrev.push({ ...dt.shop })
+                        dataPrev.push({ ...dt })
                     })
 
                     commit('SET_DATA', dataPrev)
                     commit('SET_TOTAL_RECORD', res.data.total_record)
-
-                    // if (dataPrev.length > 0) {
-                    //     commit('SET_SELECTED_DATA', dataPrev[0].id)
-                    // }
-
-                    if (payload.length < state.limit) {
-                        commit('SET_LOAD_MORE', false)
-                    } else {
-                        commit('SET_LOAD_MORE', true)
-                    }
 
                     return res
                 })

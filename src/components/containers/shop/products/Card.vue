@@ -1,15 +1,46 @@
 <template>
     <div id="App">
         <div v-for="(dt, i) in data" :key="i" class="card box-shadow margin margin-top-15px margin-bottom-15px">
-            <div class="display-flex space-between margin margin-bottom-15px">
-                <div class="display-flex">
-                    <div style="margin-right: 10px;"><i class="fa fa-1x fa-utensils fonts orange"></i></div>
+            <div class="display-flex space-between align-center padding padding-bottom-15px margin margin-bottom-20px border-bottom">
+                <div class="display-flex align-center">
+                    <div class="width width-30px">
+                        <i class="fa fa-1x fa-utensils fonts orange"></i>
+                    </div>
                     <div>
-                        <div class="fonts fonts-11 semibold">{{ dt.product_id }}</div>
+                        <div class="fonts fonts-10 semibold">{{ dt.product_id }}</div>
                         <div class="fonts fonts-10 grey">{{ dt.created_at | moment("from", "now") }}</div>
                     </div>
                 </div>
-                <AppCardCapsule :data="dt.status" class="margin margin-left-10px" />
+                <div class="display-flex flex-end align-center">
+                    <AppCardCapsule :data="dt.status" class="margin margin-left-10px" />
+                    <el-popover
+                        placement="bottom-end"
+                        width="180"
+                        trigger="click">
+                        <div class="width width-100">
+                            <button 
+                                class="btn btn-white btn-full btn-align-left"
+                                @click="onEdit(dt)">
+                                <i class="icn icn-left fa fa-lw fa-edit"></i> Edit 
+                            </button>
+                            <button 
+                                class="btn btn-white btn-full btn-align-left"
+                                @click="onDetail(dt)">
+                                <i class="icn icn-left fa fa-lw fa-align-left"></i> Detail 
+                            </button>
+                            <button 
+                                class="btn btn-white btn-full btn-align-left"
+                                @click="onDelete(dt)">
+                                <i class="icn icn-left fa fa-lw fa-trash-alt"></i> Delete
+                            </button>
+                        </div>
+                        <button 
+                            slot="reference"
+                            class="btn btn-icon btn-circle btn-white">
+                            <i class="fa fa-lw fa-ellipsis-v"></i>
+                        </button>
+                    </el-popover>
+                </div>
             </div>
 
             <div class="display-flex space-between">
@@ -30,42 +61,11 @@
                     </div>
                 </div>
                 <div style="width: calc(100% - 95px);">
-                    <div class="display-flex space-between">
-                        <div class="padding padding-right-15px" style="width: calc(100% - 55px);">
-                            <div class="fonts fonts-11 semibold">{{ dt.name }}</div>
-                            <AppCardCaption 
-                                icon="fa fa-lg fa-info-circle" 
-                                :caption="dt.description" />
-                        </div>
-                        <div class="width width-40px">
-                            <el-popover
-                                placement="bottom-end"
-                                width="180"
-                                trigger="click">
-                                <div class="width width-100">
-                                    <button 
-                                        class="btn btn-white btn-full btn-align-left"
-                                        @click="onEdit(dt)">
-                                        <i class="icn icn-left fa fa-lw fa-edit"></i> Edit 
-                                    </button>
-                                    <button 
-                                        class="btn btn-white btn-full btn-align-left"
-                                        @click="onDetail(dt)">
-                                        <i class="icn icn-left fa fa-lw fa-align-left"></i> Detail 
-                                    </button>
-                                    <button 
-                                        class="btn btn-white btn-full btn-align-left"
-                                        @click="onDelete(dt)">
-                                        <i class="icn icn-left fa fa-lw fa-trash-alt"></i> Delete
-                                    </button>
-                                </div>
-                                <button 
-                                    slot="reference"
-                                    class="btn btn-icon btn-sekunder">
-                                    <i class="fa fa-lw fa-ellipsis-h"></i>
-                                </button>
-                            </el-popover>
-                        </div>
+                    <div class="width width-100">
+                        <div class="fonts fonts-11 semibold">{{ dt.name }}</div>
+                        <AppCardCaption 
+                            icon="fa fa-lg fa-info-circle" 
+                            :caption="dt.description" />
                     </div>
                     <div class="display-flex space-between padding padding-top-15px">
                         <div class="fonts micro black">
@@ -92,18 +92,15 @@
                         <div class="display-flex space-between">
                             <div style="width: calc(100% - 100px);">
                                 <div class="fonts fonts-11 semibold">{{ detail.name }}</div>
-                                <div class="display-flex align-center margin margin-right-15px">
-                                    <i class="width width-20px fonts fonts-10 grey fa fa-lg fa-calculator"></i>
-                                    <div class="fonts fonts-10 grey">
-                                        Rp. {{ detail.price }}
-                                    </div>
-                                </div>
-                                <div class="display-flex align-center margin margin-right-15px">
-                                    <i class="width width-20px fonts fonts-10 grey fa fa-lg fa-history"></i>
-                                    <div class="fonts fonts-10 grey">
-                                        {{ detail.created_at | moment("from", "now") }}
-                                    </div>
-                                </div>
+                                <AppCardCaption 
+                                    icon="fa fa-lg fa-calculator" 
+                                    :caption="`Rp. ${detail.price}`" />
+                                <AppCardCaption 
+                                    icon="fa fa-lg fa-info-circle" 
+                                    :caption="detail.description" />
+                                <AppCardCaption 
+                                    icon="fa fa-lg fa-history" 
+                                    :caption="detail.created_at | moment('from', 'now')" />
                             </div>
                             <div class="width width-100px display-flex flex-end">
                                 <AppCardCapsule :data="detail.status" />

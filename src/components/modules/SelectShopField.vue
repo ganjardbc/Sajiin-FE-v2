@@ -24,14 +24,18 @@ export default {
     mounted () {},
     computed: {
         ...mapState({
-            data: (state) => state.storeSelectedShop.data,
+            data: (state) => state.storeSelectedShop.data
         }),
         selectedData: {
             get () {
                 return this.$store.state.storeSelectedShop.selectedData
             },
             set (value) {
+                const shop_id = this.$route.params.shopId
                 this.$store.state.storeSelectedShop.selectedData = value
+                if (value !== shop_id) {
+                    this.$router.push({ name: 'shop-home', params: { shopId: value } })
+                }
             }
         }
     },

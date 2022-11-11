@@ -1,15 +1,20 @@
 <template>
     <div id="App">
         <div v-for="(dt, i) in data" :key="i" class="card box-shadow margin margin-top-15px margin-bottom-15px">
-            <div class="display-flex space-between margin margin-bottom-15px">
-                <div class="display-flex">
-                    <div style="margin-right: 10px;"><i class="fa fa-1x fa-list-ul fonts orange"></i></div>
-                    <div>
-                        <div class="fonts fonts-11 semibold">{{ dt.order.order_id }}</div>
+            <div class="display-flex space-between align-center padding padding-bottom-15px margin margin-bottom-20px border-bottom">
+                <div class="display-flex align-center">
+                    <div class="width width-30px">
+                        <i class="fa fa-1x fa-list-ul fonts orange"></i>
+                    </div>
+                    <div style="width: calc(100% - 30px);">
+                        <div class="fonts fonts-10 semibold">{{ dt.order.order_id }}</div>
                         <div class="fonts fonts-10 grey">{{ dt.order.created_at | moment("dddd, MMMM Do YYYY hh:mm") }}</div>
                     </div>
                 </div>
-                <AppCardCapsule :data="dt.order.status" class="margin margin-left-10px" />
+                <div class="display-flex flex-end">
+                    <AppCardCapsule :data="dt.order.payment_status ? 'paid' : 'unpaid'" />
+                    <AppCardCapsule :data="dt.order.status" class="margin margin-left-5px" />
+                </div>
             </div>
 
             <div class="display-flex space-between display-mobile margin margin-bottom-15px">
@@ -19,8 +24,8 @@
                         <div class="fonts fonts-10 semibold orange">Rp. {{ dt.order.total_price }}</div>
                     </div>
                     <div class="width width-50">
-                        <div class="fonts fonts-9 normal grey">Payment Status</div>
-                        <div class="fonts fonts-10 semibold">{{ dt.order.payment_status ? 'Paid' : 'Unpaid' }}</div>
+                        <div class="fonts fonts-9 normal grey">Quantity</div>
+                        <div class="fonts fonts-10 semibold">{{ dt.order.total_item }} products</div>
                     </div>
                 </div>
                 <div class="width width-50 width-mobile display-flex margin margin-top-5px margin-bottom-5px">
@@ -37,7 +42,7 @@
 
             <AppCardCollapse 
                 v-if="dt.details.length > 0" 
-                :title="`Items (${dt.details.length})`"
+                :title="`Products (${dt.order.total_item})`"
                 class="margin margin-bottom-15px">
                 <div class="width width-100">
                     <div 
@@ -83,7 +88,10 @@
             </AppCardCollapse>
 
             <div class="display-flex flex-end">
-                <button class="btn btn-main margin margin-left-10px">
+                <button v-if="dt.order.payment_status" class="btn btn-main-reverse with-hover">
+                    <i class="icn icn-left fa fa-lw fa-receipt"></i> Print Receipt
+                </button>
+                <button v-else class="btn btn-main">
                     <i class="icn icn-left fa fa-lw fa-calculator"></i> Check Out
                 </button>
                 <button class="btn btn-sekunder margin margin-left-10px">
@@ -98,11 +106,6 @@
                             class="btn btn-white btn-full btn-align-left"
                             @click="onEdit(dt)">
                             <i class="icn icn-left fa fa-lw fa-edit"></i> Edit 
-                        </button>
-                        <button 
-                            class="btn btn-white btn-full btn-align-left"
-                            @click="onDetail(dt)">
-                            <i class="icn icn-left fa fa-lw fa-align-left"></i> Detail 
                         </button>
                         <button 
                             class="btn btn-white btn-full btn-align-left"

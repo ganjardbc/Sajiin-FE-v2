@@ -5,7 +5,7 @@
         <div class="left">
             <div class="display-flex space-between display-mobile margin margin-bottom-15px">
                 <div class="width width-75 width-mobile display-flex space-between">
-                    <h1 class="fonts big black bold">Order Lists</h1>
+                    <h1 class="fonts big black bold">Orders</h1>
                     <div class="display-flex">
                         <button 
                             class="btn btn-icon btn-white" 
@@ -134,7 +134,7 @@ export default {
             visibleConfirmed: false,
             visibleConfirmedDelete: false,
             titleConfirmed: 'Save this data ?',
-            currentPage: 0,
+            currentPage: 1,
             selectedIndex: 0,
             tabs: tabs,
         }

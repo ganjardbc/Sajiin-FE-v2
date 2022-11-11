@@ -39,6 +39,12 @@ export default {
                 case 'inactive':
                     color = 'inactive'
                     break
+                case 'paid':
+                    color = 'active'
+                    break
+                case 'unpaid':
+                    color = 'inactive'
+                    break
             }
             return color
         }

@@ -58,7 +58,6 @@ export default {
         }
     },
     mounted () {
-        this.deleteAllProduct()
         this.getDataCategory()
         this.getDataProduct()
     },
@@ -84,7 +83,6 @@ export default {
     watch: {
         shopId (prevProps, nextProps) {
             if (prevProps !== nextProps) {
-                this.deleteAllProduct()
                 this.getDataCategory()
                 this.getDataProduct()
             }
@@ -95,8 +93,7 @@ export default {
             getProduct: 'storeCashierProduct/getData',
             resetProductFilter: 'storeCashierProduct/resetFilter',
             setProductPagination: 'storeCashierProduct/setPagination',
-            getCategory: 'storeCashierCategory/getData',
-            deleteAllProduct: 'storeCashier/deleteAllProduct'
+            getCategory: 'storeCashierCategory/getData'
         }),
         onRefresh () {
             this.getDataProduct()

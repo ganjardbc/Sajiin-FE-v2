@@ -14,7 +14,7 @@ import Tables from '@/components/containers/shop/tables/Index'
 import Reports from '@/components/containers/shop/reports/Index'
 
 const routes = {
-    path: '/shop',
+    path: '/shop/:shopId',
     component: Layout,
     children: [
         {

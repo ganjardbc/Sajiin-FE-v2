@@ -92,6 +92,7 @@ export default {
             }
             this.indexDetail = null 
             this.addProduct(payload)
+            this.$message(`Adding ${value.name} to cart.`)
         }
     }
 }

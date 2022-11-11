@@ -9,7 +9,7 @@
                     class="btn btn-small btn-main-reverse with-border with-hover margin margin-right-10px"
                     :disabled="!isThereDetails"
                     @click="deleteAllProduct">
-                    Delete All
+                    Clear Carts
                 </button>
             </div>
             <div class="right-form-body">
@@ -20,23 +20,28 @@
             </div>
             <div slot="footer">
                 <div class="right-form-footer">
-                    <div class="card bg-white box-shadow">
+                    <div class="card bg-white box-shadow margin margin-bottom-15px">
                         <div class="display-flex space-between">
-                            <div class="fonts fonts-11 normal grey">Quantity</div>
-                            <div class="fonts fonts-11 semibold black">{{ orderQuantity }} products</div>
+                            <div class="fonts fonts-10 normal grey">Subtotal ({{ orderQuantity }} products)</div>
+                            <div class="fonts fonts-10 normal grey">Rp. {{ orderPrice }}</div>
                         </div>
                         <div class="display-flex space-between">
-                            <div class="fonts fonts-11 normal grey">Total Price</div>
+                            <div class="fonts fonts-10 normal grey">Discount</div>
+                            <div class="fonts fonts-10 normal grey">Rp. 0</div>
+                        </div>
+                        <div class="padding padding-bottom-15px margin margin-bottom-15px border-bottom"></div>
+                        <div class="display-flex space-between">
+                            <div class="fonts fonts-11 semibold black">Total</div>
                             <div class="fonts fonts-11 semibold orange">Rp. {{ orderPrice }}</div>
                         </div>
                     </div>
 
-                    <div class="width width-100 margin margin-top-15px">
+                    <div class="width width-100">
                         <button 
                             class="btn btn-main btn-full"
                             :disabled="!isThereDetails"
                             @click="onCheckOut">
-                            Check Out
+                            Continue to Payment
                         </button>
                     </div>
                 </div>
@@ -45,7 +50,7 @@
     </div>
 </template>
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 import AppEmpty from '../../../../modules/AppEmpty'
 import AppSideForm from '../../../../modules/AppSideForm'
 import CardProduct from './CardProduct'
@@ -58,8 +63,10 @@ export default {
         CardProduct
     },
     computed: {
+        ...mapGetters({
+            getShopData: 'storeSelectedShop/getSelectedData'
+        }),
         ...mapState({
-            form: (state) => state.storeCashier.form,
             details: (state) => state.storeCashier.form.details 
         }),
         orderQuantity () {
@@ -79,17 +86,21 @@ export default {
         },
         isThereDetails () {
             return this.details.length > 0
-        }
+        },
     },
     methods: {
         ...mapActions({
+            setOrder: 'storeCashier/setOrder',
             deleteAllProduct: 'storeCashier/deleteAllProduct'
         }),
         onCheckOut () {
-            console.log('onCheckOut', this.form)
-        },
-        onSave () {
-            console.log('onSave')
+            const payload = {
+                shop: this.getShopData,
+                total_item: this.orderQuantity,
+                total_price: this.orderPrice
+            }
+            this.setOrder(payload)
+            this.$emit('onCheckOut')
         },
         onClose () {
             this.$emit('onClose')

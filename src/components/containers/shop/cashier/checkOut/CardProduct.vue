@@ -27,23 +27,18 @@
                     </div>
                 </div>
                 <div class="display-flex space-between">
-                    <button class="btn btn-white">
-                        <i class="icn icn-left fa fa-lw fa-edit"></i> Note
+                    <button 
+                        :class="`btn btn-icon btn-white`" 
+                        @click="onDelete(index)">
+                        <i class="far fa-lw fa-trash-alt"></i>
                     </button>
-                    <div class="display-flex flex-end">
-                        <button 
-                            :class="`btn btn-icon btn-white`" 
-                            @click="onDelete(index)">
-                            <i class="far fa-lw fa-trash-alt"></i>
-                        </button>
 
-                        <AddQtyField 
-                            :maximumValue="'10'" 
-                            :value="dt.quantity" 
-                            :id="index" 
-                            :onChange="(data) => onTotal(data, index)"
-                            style="width: 120px; margin-left: 5px;" />
-                    </div>
+                    <AddQtyField 
+                        :maximumValue="'10'" 
+                        :value="dt.quantity" 
+                        :id="index" 
+                        :onChange="(data) => onTotal(data, index)"
+                        style="width: 120px;" />
                 </div>
             </div>
         </div>

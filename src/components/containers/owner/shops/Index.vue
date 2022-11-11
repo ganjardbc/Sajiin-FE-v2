@@ -332,7 +332,7 @@ export default {
         // MANAGE
         onManage (data) {
             this.$store.state.storeSelectedShop.selectedData = data.id
-            this.$router.push({ name: 'shop-home' })
+            this.$router.push({ name: 'shop-home', params: { shopId: data.id } })
         },
 
         // STATUS

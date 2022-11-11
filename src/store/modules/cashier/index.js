@@ -109,6 +109,15 @@ export default {
     getters: {},
 
     mutations: {
+        SET_LOADING (state, data) {
+            state.loading = data 
+        },
+        SET_MESSAGE_DATA (state, data) {
+            state.errorMessage = data 
+        },
+        RESET_ORDER (state) {
+            state.form = defaultForm()
+        },
         ADD_PRODUCT (state, data) {
             const currentProduct = state
                 .form
@@ -192,10 +201,45 @@ export default {
         },
         DELETE_ALL_PRODUCT (state, data) {
             state.form.details = []
+        },
+        SET_ORDER (state, data) {
+            const time = new Date().getTime()
+            const payload = {
+                ...state.form,
+                order: {
+                    ...state.form.order,
+                    order_id: `ODR-${time}`,
+                    shop_id: data.shop.id,
+                    shop_name: data.shop.name,
+                    total_item: data.total_item,
+                    total_price: data.total_price,
+                    status: 'confirmed'
+                },
+                shop: {
+                    ...data.shop
+                }
+            }
+            state.form = payload
+        },
+        SET_ORDER_BILLS (state, data) {
+            const bills_price = data ? parseInt(data) : 0
+            const total_price = parseInt(state.form.order.total_price)
+            const total = bills_price - total_price
+            const payload = {
+                ...state.form,
+                order: {
+                    ...state.form.order,
+                    bills_price: bills_price,
+                    change_price: total,
+                    payment_status: total >= 0 ? 1 : 0
+                }
+            }
+            state.form = payload 
         }
     },
 
     actions: {
+        // PRODUCT
         addProduct ({ commit, state }, data) {
             commit('ADD_PRODUCT', data)
         },
@@ -207,6 +251,43 @@ export default {
         },
         deleteAllProduct ({ commit, state }) {
             commit('DELETE_ALL_PRODUCT')
+        },
+
+        // ORDER
+        resetOrder ({ commit, state }) {
+            commit('RESET_ORDER')
+        },
+        setOrder ({ commit, state }, data) {
+            commit('SET_ORDER', data)
+        },
+        setOrderBills ({ commit, state }, data) {
+            commit('SET_ORDER_BILLS', data)
+        },
+        createOrder ({ commit, state }, data) {
+            commit('SET_LOADING', true)
+            
+            const params = {
+                ...data
+            }
+
+            return axios.post('/api/order/postAdmin', params, { 
+                    headers: { Authorization: data.token } 
+                })
+                .then((res) => {
+                    const data = res.data 
+                    if (data.status === 'ok') {
+                        commit('SET_MESSAGE_DATA', data.message)
+                    } else {
+                        commit('SET_MESSAGE_DATA', data.message)
+                    }
+                    return res
+                })
+                .catch((e) => {
+                    console.log('error', e)
+                })
+                .finally(() => {
+                    commit('SET_LOADING', false)
+                })
         },
     }
 }

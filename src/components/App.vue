@@ -24,20 +24,22 @@ export default {
             // }
             // this.$socket.emit('admin', payload)
 
-            this.getShopData()
-            this.getCategoryData()
+            // this.setShopData()
+            // this.getShopData()
+            // this.getCategoryData()
         }
     },
     computed: {
         ...mapState({
-            filterCategory: (state) => state.storeCategory.filter,
+            // filterCategory: (state) => state.storeCategory.filter,
         })
     },
     methods: {
         ...mapActions({
             setToast: 'toast/setToast',
-            getShop: 'storeSelectedShop/getData',
-            getCategory: 'storeCategory/getData'
+            // setShop: 'storeSelectedShop/setSelectedData',
+            // getShop: 'storeSelectedShop/getData',
+            // getCategory: 'storeCategory/getData'
         }),
         makeToast (title) {
             const payload = {
@@ -46,15 +48,19 @@ export default {
             }
             this.setToast(payload)
         },
-        getShopData () {
-            const token = this.$session.get('tokenBearer')
-            this.getShop({ token })
-        },
-        getCategoryData () {
-            const token = this.$session.get('tokenBearer')
-            this.filterCategory.status = 'active'
-            this.getCategory({ token })
-        }
+        // setShopData () {
+        //     const shop_id = this.$route.params.shopId
+        //     this.setShop(shop_id)
+        // },
+        // getShopData () {
+        //     const token = this.$session.get('tokenBearer')
+        //     this.getShop({ token })
+        // },
+        // getCategoryData () {
+        //     const token = this.$session.get('tokenBearer')
+        //     this.filterCategory.status = 'active'
+        //     this.getCategory({ token })
+        // }
     },
     sockets: {
         connect: function () {

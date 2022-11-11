@@ -4,46 +4,51 @@
             v-for="(dt, i) in data"
             :key="i"
             class="card box-shadow margin margin-top-15px margin-bottom-15px">
-            <div class="display-flex space-between">
-                <div style="width: calc(100% - 100px);">
-                    <div class="fonts fonts-11 semibold">{{ dt.name }}</div>
-                    <div class="fonts fonts-10 grey">Rp. {{ dt.price }}</div>
+            <div class="display-flex space-between align-center padding padding-bottom-15px margin margin-bottom-20px border-bottom">
+                <div>
+                    <div class="fonts fonts-10 semibold">{{ dt.proddetail_id }}</div>
                     <div class="fonts fonts-10 grey">{{ dt.created_at | moment("from", "now") }}</div>
                 </div>
-                <div class="width width-100px display-flex flex-end">
-                    <AppCardCapsule :data="dt.status" />
+                <div class="display-flex flex-end align-center">
+                    <AppCardCapsule :data="dt.status" class="margin margin-left-10px" />
+                    <el-popover
+                        v-if="typeFormProduct !== 'detail'" 
+                        placement="bottom-end"
+                        width="180"
+                        trigger="click">
+                        <div class="width width-100">
+                            <button 
+                                class="btn btn-white btn-full btn-align-left"
+                                @click="onEdit(dt)">
+                                <i class="icn icn-left fa fa-lw fa-edit"></i> Edit 
+                            </button>
+                            <button 
+                                class="btn btn-white btn-full btn-align-left"
+                                @click="onDetail(dt)">
+                                <i class="icn icn-left fa fa-lw fa-align-left"></i> Detail 
+                            </button>
+                            <button 
+                                class="btn btn-white btn-full btn-align-left"
+                                @click="onDelete(dt)">
+                                <i class="icn icn-left fa fa-lw fa-trash-alt"></i> Delete
+                            </button>
+                        </div>
+                        <button 
+                            slot="reference"
+                            class="btn btn-icon btn-circle btn-white">
+                            <i class="fa fa-lw fa-ellipsis-v"></i>
+                        </button>
+                    </el-popover>
                 </div>
             </div>
-            <div 
-                v-if="typeFormProduct !== 'detail'" 
-                class="display-flex space-between padding padding-top-15px">
-                <button 
-                    class="btn btn-sekunder btn-full"
-                    @click="onEdit(dt)">
-                    <i class="icn icn-left fa fa-lw fa-edit"></i> Edit Varian
-                </button>
-                <el-popover
-                    placement="top-end"
-                    width="180"
-                    trigger="click">
-                    <div class="width width-100">
-                        <button 
-                            class="btn btn-white btn-full btn-align-left"
-                            @click="onDetail(dt)">
-                            <i class="icn icn-left fa fa-lw fa-align-left"></i> Detail 
-                        </button>
-                        <button 
-                            class="btn btn-white btn-full btn-align-left"
-                            @click="onDelete(dt)">
-                            <i class="icn icn-left fa fa-lw fa-trash-alt"></i> Delete
-                        </button>
-                    </div>
-                    <button 
-                        slot="reference"
-                        class="btn btn-icon btn-sekunder margin margin-left-10px">
-                        <i class="fa fa-lw fa-ellipsis-h"></i>
-                    </button>
-                </el-popover>
+            <div class="width width-100">
+                <div class="fonts fonts-11 semibold">{{ dt.name }}</div>
+                <AppCardCaption 
+                    icon="fa fa-lg fa-calculator" 
+                    :caption="`Rp. ${dt.price}`" />
+                <AppCardCaption 
+                    icon="fa fa-lg fa-info-circle" 
+                    :caption="dt.description" />
             </div>
         </div>
     </div>
@@ -51,6 +56,7 @@
 <script>
 import { mapState } from 'vuex'
 import AppCardCapsule from '../../../../modules/AppCardCapsule'
+import AppCardCaption from '../../../../modules/AppCardCaption'
 
 export default {
     name: 'App',
@@ -58,7 +64,8 @@ export default {
         data: null,
     },
     components: {
-        AppCardCapsule
+        AppCardCapsule,
+        AppCardCaption
     },
     computed: {
         ...mapState({

@@ -31,6 +31,8 @@ import storeOrders from './modules/orders'
 import storeCashier from './modules/cashier/index'
 import storeCashierCategory from './modules/cashier/category'
 import storeCashierProduct from './modules/cashier/product'
+import storeCashierTable from './modules/cashier/table'
+import storeCashierPayment from './modules/cashier/payment'
 
 Vue.use(Vuex)
 
@@ -53,6 +55,8 @@ export default new Vuex.Store({
     storeCashier,
     storeCashierCategory,
     storeCashierProduct,
+    storeCashierTable,
+    storeCashierPayment,
 
     // old store
     auth,
