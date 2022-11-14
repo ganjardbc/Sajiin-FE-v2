@@ -46,6 +46,16 @@
             display: block;
         }
     }
+    &.display-row-mobile {
+        @media (max-width: $min-width) {
+            flex-direction: row;
+        }
+    }
+    &.display-column-mobile {
+        @media (max-width: $min-width) {
+            flex-direction: column;
+        }
+    }
     &.row-reverse {
         flex-direction: row-reverse;
     }

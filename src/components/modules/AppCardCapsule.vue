@@ -1,7 +1,7 @@
 <template>
     <div id="App">
         <div :class="`card-capsule ${getColor()}`">
-            {{ data }}
+            {{ data.replace(/-/g, ' ') }}
         </div>
     </div>
 </template>
@@ -25,6 +25,15 @@ export default {
                     color = 'wip'
                     break
                 case 'delivered':
+                    color = 'wip'
+                    break
+                case 'on-progress':
+                    color = 'wip'
+                    break
+                case 'todo':
+                    color = 'normal'
+                    break
+                case 'wip':
                     color = 'wip'
                     break
                 case 'done':

@@ -40,8 +40,8 @@ const defaultOrder = () => {
         change_price: 0,
         payment_status: 0,
         proof_of_payment: '',
-        status: 'unconfirmed',
-        type: 'personal',
+        status: 'new-order',
+        type: 'dine-in',
         note: '',
         customer_name: '',
         shop_name: '',
@@ -66,6 +66,7 @@ const defaultProduct = () => {
         discount: 0,
         quantity: 0,
         subtotal: 0,
+        note: "",
         product_image: "",
         product_name: "",
         product_detail: "",
@@ -142,7 +143,7 @@ export default {
                     product_id: data.id,
                     proddetail_id: data.varian.id,
                     shop_id: data.shop_id,
-                    status: "waiting"
+                    status: "to-do"
                 }
                 state.form.details.push(payload)
             } else {
@@ -213,7 +214,7 @@ export default {
                     shop_name: data.shop.name,
                     total_item: data.total_item,
                     total_price: data.total_price,
-                    status: 'confirmed'
+                    status: 'on-progress'
                 },
                 shop: {
                     ...data.shop

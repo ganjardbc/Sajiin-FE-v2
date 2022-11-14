@@ -25,6 +25,7 @@
         </div>
         <div class="width width-100">
             <div v-loading="loadingProduct" class="display-flex wrap">
+                <AppEmpty v-if="dataProduct.length === 0" />
                 <div v-for="(data, i) in dataProduct" :key="i" class="column-3 mobile-column">
                     <CardProduct :data="data" />
                 </div>
@@ -47,6 +48,7 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 import SearchField from '../../../../modules/SearchField'
+import AppEmpty from '../../../../modules/AppEmpty'
 import CardProduct from './CardProduct'
 import CardCategory from './CardCategory'
 
@@ -62,6 +64,7 @@ export default {
         this.getDataProduct()
     },
     components: {
+        AppEmpty,
         SearchField,
         CardProduct,
         CardCategory

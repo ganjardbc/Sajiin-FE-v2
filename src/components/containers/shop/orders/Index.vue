@@ -12,16 +12,16 @@
                             @click="onRefresh">
                             <i class="fa fa-lw fa-retweet"></i>
                         </button>
-                        <button 
+                        <!-- <button 
                             class="btn btn-icon btn-white" 
                             @click="onCreate">
                             <i class="fa fa-lw fa-plus" />
-                        </button>
+                        </button> -->
                     </div>
                 </div>
                 <div class="width width-25 width-mobile">
                     <SearchField 
-                        :placeholder="'Search orders ..'" 
+                        :placeholder="'Search by order-id ..'" 
                         :enableResponsive="true" 
                         :onChange="(data) => onSearch(data)" />
                 </div>
@@ -31,11 +31,11 @@
                 :selectedIndex.sync="selectedIndex" 
                 :data="tabs" 
                 :onChange="(data) => onChangeTabs(data)"
-                class="width width-400px width-mobile margin margin-bottom-20px" />
+                class="width width-500px width-mobile margin margin-bottom-20px" />
 
             <div class="width width-100">
                 <div v-loading="loading">
-                    <AppEmpty v-if="!loading && data.length === 0" />
+                    <AppEmpty v-if="data.length === 0" />
                     <Card 
                         :data.sync="data"
                         @onChangeCover="uploadImage"
@@ -117,9 +117,10 @@ import Card from './Card'
 
 const tabs = [
     {id: 1, label: 'All', status: 'active'},
-    {id: 2, label: 'Unpaid', status: ''},
-    {id: 3, label: 'Done', status: ''},
-    {id: 4, label: 'Canceled', status: ''},
+    {id: 2, label: 'New', status: ''},
+    {id: 3, label: 'On Progress', status: ''},
+    {id: 4, label: 'Done', status: ''},
+    {id: 5, label: 'Canceled', status: ''},
 ]
 
 export default {
@@ -140,7 +141,7 @@ export default {
         }
     },
     mounted () {
-        this.getData()
+        this.onChangeTabs(0)
     },
     components: {
         AppEmpty,
@@ -212,6 +213,29 @@ export default {
         },
         onChangeTabs (data) {
             this.selectedIndex = data
+            switch (this.selectedIndex) {
+                case 0:
+                    this.filter.status = ''
+                    this.filter.payment_status = ''
+                    break
+                case 1:
+                    this.filter.status = 'new-order'
+                    this.filter.payment_status = ''
+                    break
+                case 2:
+                    this.filter.status = 'on-progress'
+                    this.filter.payment_status = ''
+                    break
+                case 3:
+                    this.filter.status = 'done'
+                    this.filter.payment_status = '1'
+                    break
+                case 4:
+                    this.filter.status = 'canceled'
+                    this.filter.payment_status = ''
+                    break
+            }
+            this.handleFilterSearch()
         },
 
         // LIST DATA

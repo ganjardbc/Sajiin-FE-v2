@@ -333,6 +333,7 @@ a.btn {
 .btn.btn-main-reverse {
   background-color: #fff;
   color: #FB3640;
+  border: 1px #fff solid;
 }
 .btn.btn-main-reverse.with-border {
   border: 1px #FB3640 solid;
@@ -2296,6 +2297,16 @@ a.btn {
 @media (max-width: 720px) {
   .display-flex.display-mobile {
     display: block;
+  }
+}
+@media (max-width: 720px) {
+  .display-flex.display-row-mobile {
+    flex-direction: row;
+  }
+}
+@media (max-width: 720px) {
+  .display-flex.display-column-mobile {
+    flex-direction: column;
   }
 }
 .display-flex.row-reverse {

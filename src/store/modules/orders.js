@@ -1,17 +1,76 @@
 import axios from 'axios'
 
+const defaultOrderStatus = () => {
+    return [
+        {value: 'new-order', label: 'New Order'},
+        {value: 'on-progress', label: 'On Progress'},
+        {value: 'done', label: 'Done'},
+        {value: 'canceled', label: 'Canceled'},
+    ]
+}
+
+const defaultOrderType = () => {
+    return [
+        {value: 'dine-in', label: 'Dine In'},
+        {value: 'dine-out', label: 'Dine Out'}
+    ]
+}
+
+const defaultMessage = () => {
+    return {
+        id: '',
+        order_id: '',
+        delivery_fee: '',
+        total_price: '',
+        total_item: '',
+        bills_price: '',
+        change_price: '',
+        payment_status: '',
+        proof_of_payment: '',
+        status: '',
+        type: '',
+        note: '',
+        customer_name: '',
+        shop_name: '',
+        table_name: '',
+        payment_name: '',
+        shipment_name: '',
+        config_id: '',
+        shop_id: '',
+        customer_id: '',
+        table_id: '',
+        address_id: '',
+        shipment_id: '',
+        payment_id: ''
+    }
+}
+
 const defaultForm = () => {
     return {
         id: '',
         order_id: '',
-        image: '',
-        name: '',
-        description: '',
+        delivery_fee: 0,
+        total_price: 0,
+        total_item: 0,
+        bills_price: 0,
+        change_price: 0,
+        payment_status: 0,
+        proof_of_payment: '',
+        status: 'unconfirmed',
+        type: 'personal',
         note: '',
-        is_pinned: 0,
-        is_available: 0,
-        status: '',
-        category_id: ''
+        customer_name: '',
+        shop_name: '',
+        table_name: '',
+        payment_name: '',
+        shipment_name: '',
+        config_id: null,
+        shop_id: '',
+        customer_id: '',
+        table_id: '',
+        address_id: '',
+        shipment_id: '',
+        payment_id: ''
     }
 }
 
@@ -20,7 +79,9 @@ export default {
 
     state: {
         form: defaultForm(),
-        errorMessage: defaultForm(),
+        errorMessage: defaultMessage(),
+        orderStatus: defaultOrderStatus(),
+        orderType: defaultOrderType(),
         limit: 5,
         offset: 0,
         totalRecord: 0,
@@ -32,6 +93,7 @@ export default {
         filter: {
             search: '',
             status: '',
+            payment_status: '',
         }
     },
 
@@ -39,7 +101,7 @@ export default {
 
     mutations: {
         RESET_ERROR_MESSAGE (state) {
-            state.errorMessage = defaultForm()
+            state.errorMessage = defaultMessage()
         },
         SET_LOADING (state, value) {
             state.loading = value
@@ -60,7 +122,7 @@ export default {
             if (value) {
                 state.errorMessage = value 
             } else {
-                state.errorMessage = defaultForm() 
+                state.errorMessage = defaultMessage() 
             }
         },
         SET_FORM_DATA (state, value) {
@@ -111,6 +173,7 @@ export default {
                 offset: state.offset,
                 search: state.filter.search,
                 status: state.filter.status,
+                payment_status: state.filter.payment_status,
                 shop_id: data.shop_id
             }
 

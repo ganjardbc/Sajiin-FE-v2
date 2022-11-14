@@ -1,11 +1,11 @@
 <template>
     <div id="App">
         <AppSideForm 
-            :title="'Check Out'" 
+            :title="'Payment'" 
             :enableCustomFooter="true"
             :onClose="onClose">
             <div class="right-form-body">
-                <div class="card bg-white box-shadow margin margin-bottom-15px margin-top-15px">
+                <!-- <div class="card bg-white box-shadow margin margin-bottom-15px margin-top-15px">
                     <div class="fonts fonts-11 semibold black">
                         Customer
                     </div>
@@ -40,7 +40,7 @@
                         Table
                     </div>
                     <Table />
-                </div>
+                </div> -->
                 <div class="card bg-white box-shadow margin margin-bottom-15px margin-top-15px">
                     <div class="display-flex space-between align-center padding padding-bottom-10px">
                         <div class="fonts fonts-11 semibold black">
@@ -62,8 +62,8 @@
                     </div>
                     <div class="padding padding-bottom-15px margin margin-bottom-15px border-bottom"></div>
                     <div class="display-flex space-between">
-                        <div class="fonts fonts-11 semibold black">Total</div>
-                        <div class="fonts fonts-11 semibold orange">Rp. {{ orderPrice }}</div>
+                        <div class="fonts fonts-10 semibold black">Total</div>
+                        <div class="fonts fonts-10 semibold orange">Rp. {{ orderPrice }}</div>
                     </div>
                 </div>
                 <div class="card bg-white box-shadow margin margin-bottom-15px margin-top-15px">
@@ -89,8 +89,8 @@
                     </div>
                     <div class="padding padding-bottom-7px margin margin-bottom-15px border-bottom"></div>
                     <div class="display-flex space-between">
-                        <div class="fonts fonts-11 semibold black">Change</div>
-                        <div class="fonts fonts-11 semibold orange">Rp. {{ form.change_price }}</div>
+                        <div class="fonts fonts-10 semibold black">Change</div>
+                        <div class="fonts fonts-10 semibold orange">Rp. {{ form.change_price }}</div>
                     </div>
                 </div>
             </div>
@@ -151,10 +151,13 @@ export default {
         },
         isButtonEnable () {
             let status = false 
-            if (!this.details) {
+            if (!this.form.payment_id) {
                 status = true 
             }
-            if (!this.form.customer_name) {
+            if (!this.form.bills_price) {
+                status = true 
+            }
+            if (!this.form.change_price) {
                 status = true 
             }
             return status

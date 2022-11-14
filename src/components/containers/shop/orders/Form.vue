@@ -5,14 +5,17 @@
             :enableSaveButton="!isDetailForm"
             :onSave="onSave"
             :onClose="onClose">
-            <AppTabs 
+            <!-- <AppTabs 
                 v-if="!isCreateForm"
                 :selectedIndex.sync="selectedIndex" 
                 :data="tabs" 
                 :onChange="(data) => onChangeTabs(data)"
                 class="margin margin-bottom-20px" />
             <FormData v-if="selectedIndex === 0" />
-            <ProductDetail v-if="selectedIndex === 1" />
+            <ProductDetail v-if="selectedIndex === 1" /> -->
+            <div>
+                {{ form }}
+            </div>
         </AppSideForm>
     </div>
 </template>
@@ -27,7 +30,7 @@ import ProductDetail from './productDetail/Index'
 
 const tabs = [
     {id: 1, label: 'Data', status: 'active'},
-    {id: 2, label: 'Varians', status: ''},
+    {id: 2, label: 'Orders', status: ''},
 ]
 
 export default {

@@ -79,7 +79,7 @@
                         type="textarea"
                         v-model="form.description"
                         :disabled="isDetailForm"
-                        :autosize="{ minRows: 4, maxRows: 4}"></el-input>
+                        :autosize="{ minRows: 2, maxRows: 2}"></el-input>
                     <div 
                         v-if="errorMessage.description" 
                         class="field-error">

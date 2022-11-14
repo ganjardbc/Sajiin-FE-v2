@@ -53,7 +53,7 @@
                         type="textarea"
                         v-model="form.about"
                         :disabled="isDetailForm"
-                        :autosize="{ minRows: 4, maxRows: 4}"></el-input>
+                        :autosize="{ minRows: 2, maxRows: 2}"></el-input>
                     <div 
                         v-if="errorMessage.about" 
                         class="field-error">
@@ -67,7 +67,7 @@
                         type="textarea"
                         v-model="form.location"
                         :disabled="isDetailForm"
-                        :autosize="{ minRows: 4, maxRows: 4}"></el-input>
+                        :autosize="{ minRows: 2, maxRows: 2}"></el-input>
                     <div 
                         v-if="errorMessage.location" 
                         class="field-error">

@@ -7,7 +7,7 @@
                 class="display-flex space-between align-center"
                 style="cursor: pointer;"
                 @click="openCollapse">
-                <div class="fonts fonts-11 semibold black">
+                <div class="fonts fonts-10 semibold black">
                     {{ title ? title : 'Collapse' }}
                 </div>
                 <button class="btn btn-white-grey btn-small-icon">

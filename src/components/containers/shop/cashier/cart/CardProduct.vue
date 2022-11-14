@@ -3,8 +3,8 @@
         <div v-for="(dt, index) in data" :key="index" class="margin margin-top-15px margin-bottom-15px">
             <div class="card bg-white box-shadow">
                 <div class="display-flex margin margin-bottom-10px">
-                    <div style="width: 60px; margin-right: 10px;">
-                        <div class="image image-padding">
+                    <div class="width width-50px">
+                        <div class="image image-40px">
                             <img 
                                 v-if="dt.product_image"
                                 :src="productImageThumbnailUrl + dt.product_image" 
@@ -14,22 +14,28 @@
                             <i v-else class="post-middle-absolute icn fa fa-lw fa-image"></i>
                         </div>
                     </div>
-                    <div style="width: calc(100% - 70px);">
+                    <div style="width: calc(100% - 50px);">
                         <div class="width width-100">
                             <div class="fonts fonts-10 semibold black" style="margin-bottom: 3px;">
                                 {{ dt.product_name }}
                             </div>
-                            <div class="display-flex">
-                                <div class="fonts fonts-9 black">{{ dt.quantity }} {{ dt.product_detail }} x Rp. {{ dt.price }}</div>
+                            <div class="display-flex space-between">
+                                <div class="fonts fonts-10 black">{{ dt.quantity }} {{ dt.product_detail }} x Rp. {{ dt.price }}</div>
+                                <div class="fonts fonts-10 semibold black" style="margin-top: 3px;">Rp. {{ dt.subtotal }}</div>
                             </div>
-                            <div class="fonts fonts-10 semibold black" style="margin-top: 3px;">Rp. {{ dt.subtotal }}</div>
                         </div>
                     </div>
                 </div>
                 <div class="display-flex space-between">
-                    <button class="btn btn-white">
+                    <!-- <button class="btn btn-white">
                         <i class="icn icn-left fa fa-lw fa-edit"></i> Note
-                    </button>
+                    </button> -->
+                    <div class="width width-200px display-flex flex-start">
+                        <el-input 
+                            placeholder="Write a note"
+                            type="text"
+                            v-model="dt.note"></el-input>
+                    </div>
                     <div class="display-flex flex-end">
                         <button 
                             :class="`btn btn-icon btn-white`" 
@@ -42,7 +48,7 @@
                             :value="dt.quantity" 
                             :id="index" 
                             :onChange="(data) => onTotal(data, index)"
-                            style="width: 120px; margin-left: 5px;" />
+                            style="width: 100px; margin-left: 5px;" />
                     </div>
                 </div>
             </div>

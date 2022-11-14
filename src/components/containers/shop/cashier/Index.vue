@@ -7,6 +7,7 @@
         <div :class="`content-form ${!visibleCart && 'hide'}`">
             <div class="right">
                 <Cart 
+                    @onCreateOrder="onCreateOrder"
                     @onCheckOut="onOpenCheckOut"
                     @onClose="onCloseCart" />
             </div>
@@ -72,7 +73,7 @@ export default {
             iconAlert: 'fa fa-4x fa-info-circle',
             visibleConfirmed: false,
             visibleConfirmedDelete: false,
-            titleConfirmed: 'Create order ?',
+            titleConfirmed: 'Create this order ?',
         }
     },
     mounted () {
@@ -144,6 +145,7 @@ export default {
                 if (status === 'ok') {
                     this.onCloseCart()
                     this.onCloseCheckOut()
+                    this.resetOrder()
                     this.$message(`Success create new order.`);
                 } else {
                     this.visibleAlert = true 
