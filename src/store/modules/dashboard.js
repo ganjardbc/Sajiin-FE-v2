@@ -20,15 +20,12 @@ export default {
             }
         ],
         matrix: {
-            all: 0,
+            allOrder: 0,
             allAdmin: 0,
-            canceled: 0,
-            confirmed: 0,
-            cooking: 0,
             done: 0,
-            packing: 0,
-            shipping: 0,
-            unconfirmed: 0,
+            canceled: 0,
+            newOrder: 0,
+            onProgress: 0,
         },
         loading: false,
     },
@@ -102,15 +99,11 @@ export default {
                 .then((res) => {
                     const data = res.data.data
                     const matrix = {
-                        all: data.all,
-                        allAdmin: data.allAdmin,
-                        canceled: data.canceled,
-                        confirmed: data.confirmed,
-                        cooking: data.cooking,
+                        allOrder: data.all_order,
                         done: data.done,
-                        packing: data.packing,
-                        shipping: data.shipping,
-                        unconfirmed: data.unconfirmed
+                        canceled: data.canceled,
+                        newOrder: data.new_order,
+                        onProgress: data.on_progress,
                     }
 
                     commit('SET_MATRIX', matrix)

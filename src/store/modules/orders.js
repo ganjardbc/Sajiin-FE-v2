@@ -141,7 +141,18 @@ export default {
         SET_TOTAL_RECORD (state, value) {
             state.totalRecord = value
         },
-
+        SET_ORDER_BILLS (state, data) {
+            const bills_price = data ? parseInt(data) : 0
+            const total_price = parseInt(state.form.total_price)
+            const total = bills_price - total_price
+            const payload = {
+                ...state.form,
+                bills_price: bills_price,
+                change_price: total,
+                payment_status: total >= 0 ? 1 : 0
+            }
+            state.form = payload 
+        }
     },
 
     actions: {
@@ -153,6 +164,9 @@ export default {
         },
         setLoadingForm ({ commit, state }, data) {
             commit('SET_LOADING_FORM', data)
+        },
+        setOrderBills ({ commit, state }, data) {
+            commit('SET_ORDER_BILLS', data)
         },
         resetFormData ({ commit, state }) {
             commit('SET_FORM_DATA', null)

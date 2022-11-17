@@ -23,18 +23,18 @@
                     <div class="card bg-white box-shadow margin margin-bottom-20px">
                         <AppCardCollapse :title="`Customer ${form.customer_name ? ' : ' + form.customer_name : ''}`">
                             <div class="field-group">
-                                <!-- <div class="field-label">Customer Info</div> -->
                                 <el-input 
                                     placeholder="Customer name"
                                     type="text"
+                                    :disabled="!isThereDetails"
                                     v-model="form.customer_name"></el-input>
-                                <Table class="margin margin-top-15px" />
+                                <Table v-if="isThereDetails" class="margin margin-top-15px" />
                             </div>
                         </AppCardCollapse>
                         <div class="padding padding-bottom-15px margin margin-bottom-15px border-bottom"></div>
                         <div class="display-flex space-between">
                             <div class="fonts fonts-10 semibold black">Total ({{ orderQuantity }} products)</div>
-                            <div class="fonts fonts-10 semibold orange">Rp. {{ orderPrice }}</div>
+                            <div class="fonts fonts-10 semibold orange">{{ format(orderPrice) }}</div>
                         </div>
                     </div>
 

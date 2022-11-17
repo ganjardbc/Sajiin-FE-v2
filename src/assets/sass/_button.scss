@@ -148,6 +148,14 @@ a {
             background-color: rgba($color: $green, $alpha: 0.77);
         }
     }
+    &.btn-blue {
+        background-color: $blue;
+        color: #fff;
+        border: 1px $blue solid;
+        &:hover {
+            background-color: rgba($color: $blue, $alpha: 0.77);
+        }
+    }
     &.btn-orange {
         background-color: $orange;
         color: #fff;

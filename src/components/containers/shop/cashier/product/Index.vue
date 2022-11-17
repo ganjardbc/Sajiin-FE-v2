@@ -60,6 +60,7 @@ export default {
         }
     },
     mounted () {
+        this.resetFilterCategory()
         this.getDataCategory()
         this.getDataProduct()
     },
@@ -86,6 +87,7 @@ export default {
     watch: {
         shopId (prevProps, nextProps) {
             if (prevProps !== nextProps) {
+                this.resetFilterCategory()
                 this.getDataCategory()
                 this.getDataProduct()
             }
@@ -114,6 +116,9 @@ export default {
         handleCurrentChange (value) {
             this.setProductPagination(value)
             this.getDataProduct()
+        },
+        resetFilterCategory () {
+            this.filter.category = ''
         },
 
         // LIST DATA

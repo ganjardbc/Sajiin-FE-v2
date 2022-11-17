@@ -71,6 +71,11 @@ const defaultSidebar = [
         ]
     },
     {
+        icon: 'fa fa-lg fa-database', label: 'ADMIN', value: 0, disableMenu: false, menu: [
+            {icon: 'fa fa-lg fa-home', label: 'Admin Panel', value: 0, link: '', permission: 'users'},
+        ]
+    },
+    {
         icon: 'fa fa-lg fa-database', label: 'OTHERS', value: 0, disableMenu: false, menu: [
             {icon: 'fa fa-lg fa-user', label: 'Profile', value: 0, link: 'owner-profile', permission: 'users'},
             {icon: 'fa fa-lg fa-cogs', label: 'Settings', value: 0, link: 'owner-settings', permission: 'users'},

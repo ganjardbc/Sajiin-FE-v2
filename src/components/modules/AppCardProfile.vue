@@ -7,7 +7,7 @@
             <div class="width width-100 content-center">
                 <div class="padding margin margin-bottom-15px padding padding-bottom-15px border-bottom">
                     <div 
-                        class="image image-80px image-center image-circle border-full" 
+                        class="image image-80px image-center image-circle" 
                         style="text-align: center; margin-bottom: 15px;">
                         <img 
                             v-if="data && data.image" 
@@ -27,7 +27,7 @@
             </div>
             <button 
                 slot="reference"
-                class="btn btn-white btn-circle">
+                class="btn btn-sekunder btn-circle">
                 <i class="icn icn-left fa fa-lw fa-user"></i> 
                 {{ data && data.username }}
                 <i class="icn icn-right fa fa-lw fa-caret-down"></i>

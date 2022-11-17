@@ -20,8 +20,8 @@
                                 {{ dt.product_name }}
                             </div>
                             <div class="display-flex space-between">
-                                <div class="fonts fonts-10 black">{{ dt.quantity }} {{ dt.product_detail }} x Rp. {{ dt.price }}</div>
-                                <div class="fonts fonts-10 semibold black" style="margin-top: 3px;">Rp. {{ dt.subtotal }}</div>
+                                <div class="fonts fonts-10 black">{{ dt.quantity }} {{ dt.product_detail }} x {{ format(dt.price) }}</div>
+                                <div class="fonts fonts-10 semibold black" style="margin-top: 3px;">{{ format(dt.subtotal) }}</div>
                             </div>
                         </div>
                     </div>
@@ -39,6 +39,7 @@
                     <div class="display-flex flex-end">
                         <button 
                             :class="`btn btn-icon btn-white`" 
+                            style="margin-left: 5px;"
                             @click="onDelete(index)">
                             <i class="far fa-lw fa-trash-alt"></i>
                         </button>

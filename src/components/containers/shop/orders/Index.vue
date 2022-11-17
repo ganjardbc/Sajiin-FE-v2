@@ -1,8 +1,6 @@
 <template>
-    <div 
-        id="App" 
-        :class="formClass ? 'content-form' : 'content-form hide'">
-        <div class="left">
+    <div id="App">
+        <div class="width width-100">
             <div class="display-flex space-between display-mobile margin margin-bottom-15px">
                 <div class="width width-75 width-mobile display-flex space-between">
                     <h1 class="fonts big black bold">Orders</h1>
@@ -42,8 +40,8 @@
                         @onDetail="onDetail"
                         @onEdit="onEdit"
                         @onDelete="onDelete"
-                        @onChangeProductStatus="onChangeProductStatus"
-                        @onChangeVarianStatus="onChangeVarianStatus" />
+                        @onChangeStatus="onChangeStatus"
+                        @onCheckout="onOpenCheckout" />
                 </div>
                 <div class="width width-100 display-flex flex-end align-center padding padding-top-15px">
                     <div class="fonts fonts-10 normal black">Total {{ totalRecord }}</div>
@@ -61,45 +59,66 @@
 
         </div>
 
-        <div class="right">
-            <Form 
-                @uploadImage="uploadImage"
-                @removeImage="removeImage"
-                @onSave="onOpenVisibleConfirmed"
-                @onClose="onClose">
-            </Form>
-
-            <AppFileUpload 
-                v-if="visibleUpdateCover"
-                @onClose="onCloseCover"
-                @onUpload="onUpdateCover"
-            />
-
-            <AppPopupConfirmed 
-                v-if="visibleConfirmed"
-                :title="titleConfirmed"
-                @onClickNo="onClickNo"
-                @onClickYes="onClickYes"
-            />
-
-            <AppPopupConfirmed 
-                v-if="visibleConfirmedDelete"
-                :title="'Delete this product ?'"
-                @onClickNo="onClickNoDelete"
-                @onClickYes="onClickYesDelete"
-            />
-
-            <AppPopupAlert 
-                v-if="visibleAlert"
-                :title="titleAlert"
-                :icon="iconAlert"
-                @onClickOk="onClickOk"
-            />
-
-            <AppPopupLoader 
-                v-if="loadingForm"
-            />
+        <div :class="`content-form ${!visibleFormOrder && 'hide'}`">
+            <div class="right">
+                <Form 
+                    @uploadImage="uploadImage"
+                    @removeImage="removeImage"
+                    @onSave="onOpenVisibleConfirmed"
+                    @onClose="onClose"
+                    @onChangeStatus="onChangeStatus"
+                    @onCheckout="onOpenCheckout">
+                </Form>
+            </div>
         </div>
+
+        <div :class="`content-form ${!visibleFormCheckout && 'hide'}`">
+            <div class="right">
+                <FormCheckout 
+                    @onSave="onSaveCheckout"
+                    @onClose="onCloseCheckout"
+                    @onCreateOrder="onOpenVisibleConfirmed">
+                </FormCheckout>
+            </div>
+        </div>
+
+        <AppFileUpload 
+            v-if="visibleUpdateCover"
+            @onClose="onCloseCover"
+            @onUpload="onUpdateCover"
+        />
+
+        <AppPopupConfirmed 
+            v-if="visibleConfirmed"
+            :title="titleConfirmed"
+            @onClickNo="onClickNo"
+            @onClickYes="onClickYes"
+        />
+
+        <AppPopupConfirmed 
+            v-if="visibleConfirmedStatus"
+            :title="titleConfirmedStatus"
+            @onClickNo="onClickNoStatus"
+            @onClickYes="onClickYesStatus"
+        />
+
+        <AppPopupConfirmed 
+            v-if="visibleConfirmedDelete"
+            :title="'Delete this order ?'"
+            @onClickNo="onClickNoDelete"
+            @onClickYes="onClickYesDelete"
+        />
+
+        <AppPopupAlert 
+            v-if="visibleAlert"
+            :title="titleAlert"
+            :icon="iconAlert"
+            @onClickOk="onClickOk"
+        />
+
+        <AppPopupLoader 
+            v-if="loadingForm"
+        />
     </div>
 </template>
 
@@ -114,10 +133,11 @@ import SearchField from '../../../modules/SearchField'
 import AppTabs from '../../../modules/AppTabs'
 import Form from './Form'
 import Card from './Card'
+import FormCheckout from './checkOut'
 
 const tabs = [
     {id: 1, label: 'All', status: 'active'},
-    {id: 2, label: 'New', status: ''},
+    {id: 2, label: 'New Order', status: ''},
     {id: 3, label: 'On Progress', status: ''},
     {id: 4, label: 'Done', status: ''},
     {id: 5, label: 'Canceled', status: ''},
@@ -128,15 +148,20 @@ export default {
     data () {
         return {
             formClass: false,
+            visibleFormOrder: false,
+            visibleFormCheckout: false,
             visibleUpdateCover: false,
             visibleAlert: false,
             titleAlert: 'Failed to preceed data',
             iconAlert: 'fa fa-4x fa-info-circle',
             visibleConfirmed: false,
             visibleConfirmedDelete: false,
+            visibleConfirmedStatus: false,
             titleConfirmed: 'Save this data ?',
+            titleConfirmedStatus: 'Update this order status ?',
             currentPage: 1,
             selectedIndex: 0,
+            selectedData: null,
             tabs: tabs,
         }
     },
@@ -153,6 +178,7 @@ export default {
         SearchField,
         Form,
         Card,
+        FormCheckout
     },
     computed: {
         ...mapState({
@@ -187,7 +213,7 @@ export default {
     },
     methods: {
         ...mapActions({
-            getproduct: 'storeOrders/getData',
+            getOrder: 'storeOrders/getData',
             setPagination: 'storeOrders/setPagination',
             resetFormData: 'storeOrders/resetFormData',
             resetFilter: 'storeOrders/resetFilter',
@@ -206,7 +232,7 @@ export default {
             this.getData()
         },
         onClose () {
-            this.formClass = false
+            this.visibleFormOrder = false
         },
         onRefresh () {
             this.getData()
@@ -242,7 +268,7 @@ export default {
         getData () {
             const token = this.$session.get('tokenBearer')
             const shop_id = this.shopId
-            this.getproduct({ token, shop_id })
+            this.getOrder({ token, shop_id })
         },
         handleCurrentChange (value) {
             this.setPagination(value)
@@ -273,11 +299,12 @@ export default {
                     }).then((res) => {
                         const status = res.data.status 
                         if (status === 'ok') {
-                            this.formClass = false 
+                            this.visibleFormOrder = false 
+                            this.visibleFormCheckout = false 
                             this.getData()
                         } else {
                             this.visibleAlert = true 
-                            this.titleAlert = 'Failed to save this product'
+                            this.titleAlert = 'Failed to save this order'
                         }
                     })
                     break
@@ -288,11 +315,12 @@ export default {
                     }).then((res) => {
                         const status = res.data.status 
                         if (status === 'ok') {
-                            this.formClass = false 
+                            this.visibleFormOrder = false 
+                            this.visibleFormCheckout = false 
                             this.getData()
                         } else {
                             this.visibleAlert = true 
-                            this.titleAlert = 'Failed to edit this product'
+                            this.titleAlert = 'Failed to edit this order'
                         }
                     })
                     break
@@ -304,17 +332,17 @@ export default {
             this.visibleConfirmed = true
             switch (this.typeForm) {
                 case 'create':
-                    this.titleConfirmed = 'Save this product ?'
+                    this.titleConfirmed = 'Save this order ?'
                     break
                 case 'edit':
-                    this.titleConfirmed = 'Edit this product ?'
+                    this.titleConfirmed = 'Edit this order ?'
                     break
             }
         },
 
         // CREATE
         onCreate () {
-            this.formClass = true
+            this.visibleFormOrder = true
             this.resetFormData()
             this.form.shop_id = this.shopId
             this.typeForm = 'create'
@@ -322,7 +350,7 @@ export default {
 
         // DETAIL
         onDetail (data) {
-            this.formClass = true
+            this.visibleFormOrder = true
             this.resetFormData()
             this.setFormData(data)
             this.typeForm = 'detail'
@@ -330,7 +358,7 @@ export default {
 
         // EDIT
         onEdit (data) {
-            this.formClass = true
+            this.visibleFormOrder = true
             this.resetFormData()
             this.setFormData(data)
             this.typeForm = 'edit'
@@ -356,7 +384,7 @@ export default {
                     this.getData()
                 } else {
                     this.visibleAlert = true 
-                    this.titleAlert = 'Failed to delete this product'
+                    this.titleAlert = 'Failed to delete this order'
                 }
             })
         },
@@ -391,38 +419,45 @@ export default {
         },
 
         // STATUS
-        onChangeProductStatus (data) {
-            this.setFormData(data)
+        onClickNoStatus () {
+            this.visibleConfirmedStatus = false 
+        },
+        onClickYesStatus () {
+            this.visibleFormOrder = false
+            this.visibleConfirmedStatus = false 
+
             const token = this.$session.get('tokenBearer')
+            this.setFormData(this.selectedData)
             this.updateData({
                 ...this.form,
                 token: token
             }).then((res) => {
                 const status = res.data.status 
                 if (status === 'ok') {
-                    this.$message(`Success changed status for product ${data.name}.`);
+                    this.$message(`Success changed status for order ${this.selectedData.order_id}.`)
+                    this.getData()
                 } else {
-                    this.$message(`Failed to change status for product ${data.name}.`);
+                    this.$message(`Failed to change status for order ${this.selectedData.order_id}.`)
                 }
             })
         },
-        onChangeVarianStatus (data) {
-            this.setLoadingForm(true)
-            this.setFormDataVarian(data)
-            const token = this.$session.get('tokenBearer')
-            this.updateDataVarian({
-                ...this.formVarian,
-                token: token
-            }).then((res) => {
-                const status = res.data.status 
-                if (status === 'ok') {
-                    this.$message(`Success changed status for varian ${data.name}.`);
-                } else {
-                    this.$message(`Failed to change status for varian ${data.name}.`);
-                }
-            }).finally(() => {
-                this.setLoadingForm(false)
-            })
+        onChangeStatus (data) {
+            this.visibleConfirmedStatus = true 
+            this.titleConfirmedStatus = `Update this order status to "${data.status}"`
+            this.selectedData = data 
+        },
+
+        // CHECKOUT 
+        onOpenCheckout (data) {
+            this.visibleFormCheckout = true 
+            this.typeForm = 'edit'
+            this.setFormData(data)
+        },
+        onCloseCheckout () {
+            this.visibleFormCheckout = false
+        },
+        onSaveCheckout () {
+            this.visibleFormCheckout = false 
         }
     }
 }

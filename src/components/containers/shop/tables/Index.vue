@@ -29,7 +29,7 @@
 
             <div class="width width-100">
                 <div v-loading="loading">
-                    <AppEmpty v-if="!loading && data.length === 0" />
+                    <AppEmpty v-if="data.length === 0" />
                     <Card 
                         :data.sync="data"
                         @onChangeCover="uploadImage"

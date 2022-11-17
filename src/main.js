@@ -8,6 +8,7 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import {routes} from './router'
 import store from './store'
+import {formatCurrency} from './services/utils'
 import SmartTable from 'vuejs-smart-table'
 import jquery from 'jquery'
 import VueSocketIO from 'vue-socket.io'
@@ -52,6 +53,7 @@ Vue.use(new VueSocketIO({
 Vue.component('apexchart', VueApexCharts)
 
 // Vue.$session.config('10d')
+Vue.prototype.format = (data) => { return formatCurrency(data) }
 Vue.prototype.deployUrl = deploy
 Vue.prototype.apiUrl = api
 Vue.prototype.initUrl = url

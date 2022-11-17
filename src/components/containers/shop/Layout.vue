@@ -38,12 +38,15 @@
                                 <i class="icn fa fa-lw fa-bars"></i>
                             </button>
                         </div>
-                        <div class="display-flex flex-end padding padding-left-15px padding-right-15px">
-                            <router-link :to="{name: 'owner-home'}">
-                                <button class="btn btn-white btn-circle margin margin-right-5px">
-                                    <i class="icn icn-left fa fa-lw fa-home"></i> Home
-                                </button>
-                            </router-link>
+                        <div class="display-flex align-center flex-end padding padding-left-15px padding-right-15px">
+                            <div class="display-flex align-center padding padding-right-10px margin margin-right-10px border-right">
+                                <router-link :to="{name: 'owner-home'}">
+                                    <button class="btn btn-white btn-icon btn-circle margin margin-right-5px">
+                                        <i class="icn fa fa-lg fa-home"></i>
+                                    </button>
+                                </router-link>
+                                <AppCardNotification />
+                            </div>
                             <AppCardProfile :data.sync="dataUser" />
                         </div>
                     </div>
@@ -80,6 +83,7 @@ import icon from '@/assets/img/icon.png'
 import AppListMenu from '../../modules/AppListMenu'
 import AppToast from '../../modules/AppToast'
 import AppToastMessage from '../../modules/AppToastMessage'
+import AppCardNotification from '../../modules/AppCardNotification'
 import AppCardProfile from '../../modules/AppCardProfile'
 import SelectShopField from '../../modules/SelectShopField'
 
@@ -137,6 +141,7 @@ export default {
     },
     components: {
         VueLoadImage,
+        AppCardNotification,
         AppCardProfile,
         AppToastMessage,
         AppToast,

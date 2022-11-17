@@ -44,10 +44,10 @@
                         <el-option
                             v-for="item in data.details"
                             :key="item.id"
-                            :label="`${item.name} (Rp. ${item.price})`"
+                            :label="`${item.name} : ${format(item.price)}`"
                             :value="item.id">
                             <span class="margin margin-top-7px fonts fonts-10 grey" style="float: left;">{{ item.name }}</span>
-                            <span class="margin margin-top-7px fonts fonts-10 black semibold" style="float: right;">Rp. {{ item.price }}</span>
+                            <span class="margin margin-top-7px fonts fonts-10 black semibold" style="float: right;">{{ format(item.price) }}</span>
                         </el-option>
                     </el-select>
                 </div>

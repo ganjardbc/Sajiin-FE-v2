@@ -8,7 +8,9 @@
                             <i :class="`post-middle-absolute ${dt.icon}`" :style="`font-size: ${dt.isActive ? '22px' : '16px'}; color: ${dt.isActive ? dt.iconColor : '#999'};`"></i>
                         </div>
                     </div>
-                    <div :style="`width: calc(100% - 70px); height: 40px; padding-top: ${dt.isActive ? '5px' : '5px'}; padding-bottom: ${dt.isActive ? '20px' : '10px'};`" :class="`${(i < (orderStatus.length - 1)) ? 'border-bottom' : ''}`">
+                    <div 
+                        :style="`width: calc(100% - 70px); height: 40px; padding-top: ${dt.isActive ? '5px' : '5px'}; padding-bottom: ${dt.isActive ? '20px' : '10px'};`" 
+                        :class="`${(i < (orderStatus.length - 1)) ? 'border-bottom' : ''}`">
                         <div class="post-top">
                             <div :class="`fonts ${dt.isActive ? 'fonts-11 black semibold' : 'fonts-10 grey'}`" style="line-height: 1.5;">{{ dt.title }}</div>
                             <div v-if="dt.isActive" class="fonts fonts-9 grey" style="line-height: 1.5;">{{ dt.subtitle }}</div>
@@ -211,7 +213,15 @@ export default {
     },
     mounted () {
         const status = this.data && this.data.order && this.data.order.status 
-        this.orderIndex = status ? status === 'confirmed' ? 0 : status === 'cooking' ? 1 : status === 'delivered' ? 2 : null : null
+        this.orderIndex = status 
+            ? status === 'confirmed' 
+                ? 0 
+                : status === 'on-progress' 
+                    ? 1 
+                    : status === 'done' 
+                        ? 2 
+                        : null 
+            : null
 
         let newPayload = defaultPayloadOrderStatus && defaultPayloadOrderStatus.map((dt, i) => {
             const stt = (i === this.orderIndex) ? true : false 

@@ -84,17 +84,15 @@
                 v-if="dt.details.length > 0" 
                 :title="`Varians (${dt.details.length})`"
                 class="margin margin-top-15px">
-                <div class="width width-100">
-                    <div 
-                        v-for="(detail, j) in dt.details" 
-                        :key="j"
+                <div class="width width-100" style="overflow-y: auto; max-height: 400px;">
+                    <div v-for="(detail, j) in dt.details" :key="j"
                         class="card box-shadow bg-white margin margin-top-15px margin-bottom-15px">
                         <div class="display-flex space-between">
                             <div style="width: calc(100% - 100px);">
                                 <div class="fonts fonts-11 semibold">{{ detail.name }}</div>
                                 <AppCardCaption 
                                     icon="fa fa-lg fa-calculator" 
-                                    :caption="`Rp. ${detail.price}`" />
+                                    :caption="format(detail.price)" />
                                 <AppCardCaption 
                                     icon="fa fa-lg fa-info-circle" 
                                     :caption="detail.description" />

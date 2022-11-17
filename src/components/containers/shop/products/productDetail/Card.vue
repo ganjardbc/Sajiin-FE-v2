@@ -45,7 +45,7 @@
                 <div class="fonts fonts-11 semibold">{{ dt.name }}</div>
                 <AppCardCaption 
                     icon="fa fa-lg fa-calculator" 
-                    :caption="`Rp. ${dt.price}`" />
+                    :caption="format(dt.price)" />
                 <AppCardCaption 
                     icon="fa fa-lg fa-info-circle" 
                     :caption="dt.description" />

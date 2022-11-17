@@ -5,42 +5,6 @@
             :enableCustomFooter="true"
             :onClose="onClose">
             <div class="right-form-body">
-                <!-- <div class="card bg-white box-shadow margin margin-bottom-15px margin-top-15px">
-                    <div class="fonts fonts-11 semibold black">
-                        Customer
-                    </div>
-                    <div class="field-group">
-                        <div class="field-label">Customer Name</div>
-                        <el-input 
-                            placeholder=""
-                            type="text"
-                            v-model="form.customer_name"></el-input>
-                        <div 
-                            v-if="errorMessage.customer_name" 
-                            class="field-error">
-                            {{ errorMessage.customer_name && errorMessage.customer_name[0] }}
-                        </div>
-                    </div>
-                    <div class="field-group">
-                        <div class="field-label">Note (optional)</div>
-                        <el-input 
-                            placeholder=""
-                            type="textarea"
-                            v-model="form.note"
-                            :autosize="{ minRows: 2, maxRows: 2}"></el-input>
-                        <div 
-                            v-if="errorMessage.note" 
-                            class="field-error">
-                            {{ errorMessage.note && errorMessage.note[0] }}
-                        </div>
-                    </div>
-                </div>
-                <div class="card bg-white box-shadow margin margin-bottom-15px margin-top-15px">
-                    <div class="fonts fonts-11 semibold black padding padding-bottom-10px">
-                        Table
-                    </div>
-                    <Table />
-                </div> -->
                 <div class="card bg-white box-shadow margin margin-bottom-15px margin-top-15px">
                     <div class="display-flex space-between align-center padding padding-bottom-10px">
                         <div class="fonts fonts-11 semibold black">
@@ -54,16 +18,16 @@
                     </div>
                     <div class="display-flex space-between">
                         <div class="fonts fonts-10 normal grey">Subtotal ({{ orderQuantity }} products)</div>
-                        <div class="fonts fonts-10 normal grey">Rp. {{ orderPrice }}</div>
+                        <div class="fonts fonts-10 normal grey">{{ format(orderPrice) }}</div>
                     </div>
                     <div class="display-flex space-between">
                         <div class="fonts fonts-10 normal grey">Discount</div>
-                        <div class="fonts fonts-10 normal grey">Rp. 0</div>
+                        <div class="fonts fonts-10 normal grey">{{ format(0) }}</div>
                     </div>
                     <div class="padding padding-bottom-15px margin margin-bottom-15px border-bottom"></div>
                     <div class="display-flex space-between">
                         <div class="fonts fonts-10 semibold black">Total</div>
-                        <div class="fonts fonts-10 semibold orange">Rp. {{ orderPrice }}</div>
+                        <div class="fonts fonts-10 semibold orange">{{ format(orderPrice) }}</div>
                     </div>
                 </div>
                 <div class="card bg-white box-shadow margin margin-bottom-15px margin-top-15px">
@@ -90,12 +54,23 @@
                     <div class="padding padding-bottom-7px margin margin-bottom-15px border-bottom"></div>
                     <div class="display-flex space-between">
                         <div class="fonts fonts-10 semibold black">Change</div>
-                        <div class="fonts fonts-10 semibold orange">Rp. {{ form.change_price }}</div>
+                        <div class="fonts fonts-10 semibold orange">{{ format(form.change_price) }}</div>
                     </div>
                 </div>
             </div>
             <div slot="footer">
                 <div class="right-form-footer">
+                    <div class="field-group" style="padding-top: 0;">
+                        <div class="field-label">Order Status</div>
+                        <div class="display-flex space-between">
+                            <div class="fonts micro black">Make this order status as "Done" ?</div>
+                            <el-switch 
+                                v-model="form.status"
+                                :disabled="isButtonEnable"
+                                :active-value="'done'"
+                                :inactive-value="'on-progress'"></el-switch>
+                        </div>
+                    </div>
                     <button 
                         class="btn btn-main btn-full"
                         :disabled="isButtonEnable"
@@ -157,7 +132,7 @@ export default {
             if (!this.form.bills_price) {
                 status = true 
             }
-            if (!this.form.change_price) {
+            if (this.form.change_price < 0) {
                 status = true 
             }
             return status

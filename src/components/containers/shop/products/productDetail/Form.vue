@@ -7,19 +7,6 @@
             :onClose="onClose">
             <div class="margin margin-bottom-20px padding padding-bottom-20px border-bottom">
                 <div class="fonts fonts-13 black semibold">General Info</div>
-                <!-- <div class="field-group">
-                    <div class="field-label">Cover</div>
-                    <div class="width width-80px">
-                        <div class="image image-padding border border-full">
-                            <img 
-                                v-if="form.image" 
-                                :src="getCover" 
-                                alt="" 
-                                class="post-center">
-                            <i v-else class="post-middle-absolute icn fa fa-lg fa-image"></i>
-                        </div>
-                    </div>
-                </div> -->
                 <div class="field-group">
                     <div class="field-label">Varian ID</div>
                     <el-input 
@@ -47,7 +34,7 @@
                     </div>
                 </div>
                 <div class="field-group">
-                    <div class="field-label">Price</div>
+                    <div class="field-label">Price (Rp)</div>
                     <el-input 
                         placeholder=""
                         type="number"

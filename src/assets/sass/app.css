@@ -406,6 +406,14 @@ a.btn {
 .btn.btn-green:hover {
   background-color: rgba(56, 193, 114, 0.77);
 }
+.btn.btn-blue {
+  background-color: #409EFF;
+  color: #fff;
+  border: 1px #409EFF solid;
+}
+.btn.btn-blue:hover {
+  background-color: rgba(64, 158, 255, 0.77);
+}
 .btn.btn-orange {
   background-color: #f6993f;
   color: #fff;
@@ -796,10 +804,10 @@ a.btn {
   box-shadow: 0 0 1px #38c172 !important;
 }
 .switch.blue input:checked + .slider {
-  background-color: #3490dc !important;
+  background-color: #409EFF !important;
 }
 .switch.blue input:focus + .slider {
-  box-shadow: 0 0 1px #3490dc !important;
+  box-shadow: 0 0 1px #409EFF !important;
 }
 .switch.red input:checked + .slider {
   background-color: #e3342f !important;
@@ -2038,7 +2046,7 @@ a.btn {
   width: 20px;
   height: 20px;
   border-radius: 100%;
-  background-color: #3490dc;
+  background-color: #409EFF;
 }
 .card-verified.not {
   background-color: #ededf1;
@@ -11634,6 +11642,14 @@ a.btn {
     width: 100%;
   }
 }
+.width.width-row-5 {
+  width: calc(100% / 5);
+}
+@media (max-width: 720px) {
+  .width.width-row-5 {
+    width: 100%;
+  }
+}
 @media (max-width: 720px) {
   .width.width-mobile {
     width: calc(100% - 0px);
@@ -11646,6 +11662,9 @@ a.btn {
   }
   .width.width-mobile-row-4 {
     width: calc(100% / 4);
+  }
+  .width.width-mobile-row-5 {
+    width: calc(100% / 5);
   }
 }
 

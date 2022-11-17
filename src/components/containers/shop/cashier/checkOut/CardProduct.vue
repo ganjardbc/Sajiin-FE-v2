@@ -20,9 +20,9 @@
                                 {{ dt.product_name }}
                             </div>
                             <div class="display-flex">
-                                <div class="fonts fonts-9 black">{{ dt.quantity }} {{ dt.product_detail }} x Rp. {{ dt.price }}</div>
+                                <div class="fonts fonts-9 black">{{ dt.quantity }} {{ dt.product_detail }} x {{ format(dt.price) }}</div>
                             </div>
-                            <div class="fonts fonts-10 semibold black" style="margin-top: 3px;">Rp. {{ dt.subtotal }}</div>
+                            <div class="fonts fonts-10 semibold black" style="margin-top: 3px;">{{ format(dt.subtotal) }}</div>
                         </div>
                     </div>
                 </div>
