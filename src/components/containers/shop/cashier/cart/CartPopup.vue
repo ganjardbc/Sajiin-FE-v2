@@ -13,7 +13,7 @@
                         <div class="display-flex">
                             <span class="fonts fonts-10 semibold">{{ orderQuantity }} Products</span>
                             <span style="margin: 0 3px;">|</span>
-                            <span class="fonts fonts-10 orange semibold">Rp. {{ orderPrice }}</span>
+                            <span class="fonts fonts-10 orange semibold">{{ format(orderPrice) }}</span>
                         </div>
                     </div>
                     <div style="width: 40px;">

@@ -1,14 +1,16 @@
 <template>
     <div id="admin">
-        <div :class="'sidebar show'">
+        <div :class="`sidebar ${visibleSidebar && 'show'}`">
             <div class="header">
                 <div class="header-content display-flex space-between align-center">
                     <div class="width width-90px" style="margin-left: -5px;">
                         <router-link :to="{name: 'admin-home'}" class="logo">
-                            <img :src="logo" alt="SAJI-IN" style="width: 100%;">
+                            <img :src="logo" alt="" style="width: 100%;">
                         </router-link>
                     </div>
-                    <button class="close btn btn-icon btn-white btn-circle">
+                    <button 
+                        class="close-button btn btn-icon btn-white btn-circle"
+                        @click="onOpenSidebar">
                         <i class="fa fa-lg fa-times"></i>
                     </button>
                 </div>
@@ -23,57 +25,29 @@
             <div class="header">
                 <div class="header-content display-flex space-between align-center">
                     <div class="display-flex padding padding-left-15px padding-right-15px">
-                        <SelectShopField />
+                        <button 
+                            class="close-button btn btn-white btn-icon btn-circle margin margin-right-5px"
+                            @click="onOpenSidebar">
+                            <i class="icn fa fa-lw fa-bars"></i>
+                        </button>
+                        <!-- <button class="btn btn-white btn-circle margin margin-right-5px">
+                            <i class="icn icn-left fa fa-lw fa-power-off"></i> Logout
+                        </button> -->
                     </div>
                     <div class="display-flex flex-end padding padding-left-15px padding-right-15px">
-                        <el-popover
-                            placement="bottom-end"
-                            width="250"
-                            trigger="click">
-                            <div>Notification</div>
-                            <button 
-                                slot="reference"
-                                class="btn btn-white btn-icon btn-circle">
-                                <i class="icn fa fa-lg fa-bell"></i>
-                            </button>
-                        </el-popover>
-                        <el-popover
-                            placement="bottom-end"
-                            width="180"
-                            trigger="click">
-                            <div class="width width-100 content-center">
-                                <div class="padding margin margin-bottom-15px border-bottom">
-                                    <div 
-                                        class="image image-80px image-center image-circle border-full" 
-                                        style="text-align: center; margin-bottom: 15px;">
-                                        <img 
-                                            v-if="dataUser && dataUser.image" 
-                                            :src="dataUser && dataUser.image ? (adminImageThumbnailUrl + dataUser.image) : ''" 
-                                            alt="">
-                                        <i 
-                                            v-else 
-                                            class="post-top fa fa-lg fa-user-circle" 
-                                            style="color: #999;" />
-                                    </div>
-                                    <div class="fonts fonts-11 align-center semibold black">{{ dataUser && dataUser.username }}</div>
-                                    <div class="fonts fonts-9 align-center grey">{{ dataUser && dataUser.role_name }}</div>
-                                </div>
-                                <router-link :to="{name: 'admin-profile'}">
-                                    <button class="btn btn-full btn-small btn-sekunder">Edit Profile</button>
-                                </router-link>
-                            </div>
-                            <button 
-                                slot="reference"
-                                class="btn btn-sekunder btn-circle margin margin-left-5px">
-                                <i class="icn icn-left fa fa-lw fa-user"></i> {{ dataUser && dataUser.username }}
-                            </button>
-                        </el-popover>
+                        <div class="display-flex align-center padding padding-right-10px margin margin-right-10px border-right">
+                            <AppCardNotification />
+                        </div>
+                        <AppCardProfile :data.sync="dataUser" />
                     </div>
                 </div>
             </div>
             <div class="main-content">
                 <div class="main-content-smalls">
                     <router-view />
+                </div>
+                <div class="display-flex center padding padding-20px">
+                    <div class="fonts fonts-10 grey align-center">App Version 1.0.0</div>
                 </div>
             </div>
         </div>
@@ -92,18 +66,24 @@ import icon from '@/assets/img/icon.png'
 import AppListMenu from '../../modules/AppListMenu'
 import AppToast from '../../modules/AppToast'
 import AppToastMessage from '../../modules/AppToastMessage'
-import AppPopupProfile from '../../modules/AppPopupProfile'
-import SelectShopField from '../../modules/SelectShopField'
+import AppCardNotification from '../../modules/AppCardNotification'
+import AppCardProfile from '../../modules/AppCardProfile'
 
-const sidebarAdmin = [
+const defaultSidebar = [
     {
-        icon: 'fa fa-lg fa-database', label: 'SHOP', value: 0, disableMenu: false, menu: [
-            {icon: 'fa fa-lg fa-store', label: 'Shops', value: 0, link: 'admin-shops', permission: 'shops'},
+        icon: 'fa fa-lg fa-database', label: 'MASTERDATA', value: 0, disableMenu: false, menu: [
+            {icon: 'fa fa-lg fa-key', label: 'Bizpars', value: 0, link: 'owner-home', permission: 'bizpars'},
+            {icon: 'fa fa-lg fa-store', label: 'Shops', value: 0, link: 'owner-home', permission: 'shops'},
+            {icon: 'fa fa-lg fa-calculator', label: 'Payments', value: 0, link: 'owner-home', permission: 'payments'},
+            {icon: 'fa fa-lg fa-box-open', label: 'Shipments', value: 0, link: 'owner-home', permission: 'shipments'},
+            {icon: 'fa fa-lg fa-list-ol', label: 'Categories', value: 0, link: 'owner-home', permission: 'categories'},
         ]
     },
     {
         icon: 'fa fa-lg fa-database', label: 'OTHERS', value: 0, disableMenu: false, menu: [
-            {icon: 'fa fa-lg fa-cogs', label: 'Settings', value: 0, link: 'admin-settings', permission: 'users'},
+            {icon: 'fa fa-lg fa-users', label: 'Permissions', value: 0, link: 'owner-profile', permission: 'permissions'},
+            {icon: 'fa fa-lg fa-users', label: 'Roles', value: 0, link: 'owner-profile', permission: 'roles'},
+            {icon: 'fa fa-lg fa-users', label: 'Users', value: 0, link: 'owner-profile', permission: 'users'},
         ]
     },
 ]
@@ -114,7 +94,8 @@ export default {
         return {
             logo: logo,
             icon: icon,
-            sidebar: sidebarAdmin,
+            visibleSidebar: false,
+            sidebar: defaultSidebar,
             countNotif: 0,
         }
     },
@@ -131,11 +112,11 @@ export default {
     },
     components: {
         VueLoadImage,
-        AppPopupProfile,
         AppToastMessage,
         AppToast,
         AppListMenu,
-        SelectShopField
+        AppCardNotification,
+        AppCardProfile,
     },
     methods: {
         ...mapActions({
@@ -147,6 +128,9 @@ export default {
             setToast: 'toast/setToast',
             setMultipleToast: 'toastmessage/setMultipleToast',
         }),
+        onOpenSidebar () {
+            this.visibleSidebar = !this.visibleSidebar
+        },
         onChangeMenu (data) {
             this.selectedLabel = this.menuShops[data].label
         },

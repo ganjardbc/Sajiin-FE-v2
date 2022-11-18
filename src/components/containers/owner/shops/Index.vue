@@ -29,7 +29,7 @@
 
             <div class="width width-100">
                 <div v-loading="loading">
-                    <AppEmpty v-if="!loading && data.length === 0" />
+                    <AppEmpty v-if="data.length === 0" />
                     <Card 
                         :data.sync="data"
                         @onChangeCover="uploadImage"
@@ -332,7 +332,7 @@ export default {
         // MANAGE
         onManage (data) {
             this.$store.state.storeSelectedShop.selectedData = data.id
-            this.$router.push({ name: 'shop-home', params: { shopId: data.id } })
+            this.$router.push({ name: 'shop-home', params: { shopId: data.shop_id } })
         },
 
         // STATUS
@@ -345,9 +345,9 @@ export default {
             }).then((res) => {
                 const status = res.data.status 
                 if (status === 'ok') {
-                    this.$message(`Success changed status for shop ${data.name}.`);
+                    this.$message(`Success changed status for shop ${data.name}.`)
                 } else {
-                    this.$message(`Failed to change status for shop ${data.name}.`);
+                    this.$message(`Failed to change status for shop ${data.name}.`)
                 }
             })
         }

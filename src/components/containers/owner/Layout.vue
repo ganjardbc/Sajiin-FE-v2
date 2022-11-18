@@ -5,7 +5,7 @@
                 <div class="header-content display-flex space-between align-center">
                     <div class="width width-90px" style="margin-left: -5px;">
                         <router-link :to="{name: 'owner-home'}" class="logo">
-                            <img :src="logo" alt="SAJI-IN" style="width: 100%;">
+                            <img :src="logo" alt="" style="width: 100%;">
                         </router-link>
                     </div>
                     <button 
@@ -30,9 +30,14 @@
                             @click="onOpenSidebar">
                             <i class="icn fa fa-lw fa-bars"></i>
                         </button>
+                        <router-link :to="{name: 'admin-home'}" class="btn btn-white btn-circle margin margin-right-5px">
+                            <i class="icn icn-left fa fa-lw fa-home"></i> Admin
+                        </router-link>
                     </div>
                     <div class="display-flex flex-end padding padding-left-15px padding-right-15px">
-                        <AppCardNotification />
+                        <div class="display-flex align-center padding padding-right-10px margin margin-right-10px border-right">
+                            <AppCardNotification />
+                        </div>
                         <AppCardProfile :data.sync="dataUser" />
                     </div>
                 </div>
@@ -68,11 +73,6 @@ const defaultSidebar = [
     {
         icon: 'fa fa-lg fa-database', label: 'SHOP', value: 0, disableMenu: false, menu: [
             {icon: 'fa fa-lg fa-store', label: 'Shops', value: 0, link: 'owner-home', permission: 'shops'},
-        ]
-    },
-    {
-        icon: 'fa fa-lg fa-database', label: 'ADMIN', value: 0, disableMenu: false, menu: [
-            {icon: 'fa fa-lg fa-home', label: 'Admin Panel', value: 0, link: '', permission: 'users'},
         ]
     },
     {

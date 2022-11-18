@@ -23,10 +23,6 @@ export default {
             //     token: token
             // }
             // this.$socket.emit('admin', payload)
-
-            // this.setShopData()
-            // this.getShopData()
-            // this.getCategoryData()
         }
     },
     computed: {
@@ -36,18 +32,10 @@ export default {
     },
     methods: {
         ...mapActions({
-            setToast: 'toast/setToast',
             // setShop: 'storeSelectedShop/setSelectedData',
             // getShop: 'storeSelectedShop/getData',
             // getCategory: 'storeCategory/getData'
         }),
-        makeToast (title) {
-            const payload = {
-                visible: true,
-                title: title
-            }
-            this.setToast(payload)
-        },
         // setShopData () {
         //     const shop_id = this.$route.params.shopId
         //     this.setShop(shop_id)
@@ -64,7 +52,7 @@ export default {
     },
     sockets: {
         connect: function () {
-            this.makeToast('Connected to Socket')
+            this.$message('Connected to Socket')
         },
     }
 }

@@ -5,7 +5,7 @@
                 <div class="header-content display-flex space-between align-center">
                     <div class="width width-90px" style="margin-left: -5px;">
                         <router-link :to="{name: 'shop-home'}" class="logo">
-                            <img :src="logo" alt="SAJI-IN" style="width: 100%;">
+                            <img :src="logo" alt="" style="width: 100%;">
                         </router-link>
                     </div>
                     <button 
@@ -16,9 +16,9 @@
                 </div>
             </div>
             <div class="content">
-                <!-- <div class="padding padding-10px">
+                <div class="padding padding-10px">
                     <SelectShopField />
-                </div> -->
+                </div>
                 <AppListMenu 
                     :data.sync="sidebar"
                     :isSidebarSmall="true" />
@@ -28,7 +28,27 @@
             </div> -->
         </div>
         <div class="main">
-            <div class="header header-double-mobile">
+            <div class="header">
+                <div class="header-content display-flex space-between align-center">
+                    <div class="display-flex align-center padding padding-left-15px padding-right-15px">
+                        <button 
+                            class="close-button btn btn-white btn-icon btn-circle margin margin-right-5px"
+                            @click="onOpenSidebar">
+                            <i class="icn fa fa-lw fa-bars"></i>
+                        </button>
+                        <router-link :to="{name: 'owner-home'}" class="btn btn-white btn-circle margin margin-right-5px">
+                            <i class="icn icn-left fa fa-lw fa-store"></i> Shops
+                        </router-link>
+                    </div>
+                    <div class="display-flex flex-end align-center padding padding-left-15px padding-right-15px">
+                        <div class="padding padding-right-10px margin margin-right-10px border-right">
+                            <AppCardNotification />
+                        </div>
+                        <AppCardProfile :data.sync="dataUser" />
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="header header-double-mobile">
                 <div class="header-content display-flex row-reverse display-mobile space-between align-center">
                     <div class="width width-300px width-mobile display-flex space-between align-center" style="height: 60px;">
                         <div class="display-flex padding padding-left-15px padding-right-15px">
@@ -58,7 +78,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="main-content">
                 <div class="main-content-smalls">
                     <router-view />
@@ -90,20 +110,14 @@ import SelectShopField from '../../modules/SelectShopField'
 const defaultSidebar = [
     {
         icon: 'fa fa-lg fa-database', label: 'DASHBOARD', value: 0, disableMenu: false, menu: [
-            {icon: 'fa fa-lg fa-tachometer-alt', label: 'Dashboard', value: 0, link: 'shop-dashboard', permission: 'dashboard'},
+            {icon: 'fa fa-lg fa-tachometer-alt', label: 'Dashboard', value: 0, link: 'shop-home', permission: 'dashboard'},
         ]
     },
-    // {
-    //     icon: 'fa fa-lg fa-database', label: 'CASHIER', value: 0, disableMenu: false, menu: [
-    //         {icon: 'fa fa-lg fa-laptop', label: 'Cashier', value: 0, link: 'shop-cashier', permission: 'cashier'},
-    //         {icon: 'fa fa-lg fa-book-open', label: 'Cash Books', value: 0, link: 'shop-cash-book', permission: 'users'},
-    //     ]
-    // },
     {
         icon: 'fa fa-lg fa-database', label: 'ORDER', value: 0, disableMenu: false, menu: [
             {icon: 'fa fa-lg fa-laptop', label: 'Cashier', value: 0, link: 'shop-cashier', permission: 'cashier'},
             {icon: 'fa fa-lg fa-list-ul', label: 'Orders', value: 0, link: 'shop-orders', permission: 'orders'},
-            {icon: 'fa fa-lg fa-calendar', label: 'Reports', value: 0, link: 'shop-reports', permission: 'users'},
+            {icon: 'fa fa-lg fa-calendar-alt', label: 'Reports', value: 0, link: 'shop-reports', permission: 'users'},
         ]
     },
     {
@@ -135,7 +149,6 @@ export default {
         }
     },
     mounted () {
-        this.setShopData()
         this.getShopData()
         this.getCategoryData()
     },
@@ -162,11 +175,15 @@ export default {
         }),
         setShopData () {
             const shop_id = this.$route.params.shopId
-            this.setShop(shop_id)
+            const shop = this.dataShop.find((item) => item.shop_id === shop_id)
+            this.setShop(shop && shop.id)
         },
         getShopData () {
             const token = this.$session.get('tokenBearer')
             this.getShop({ token })
+                .then((res) => {
+                    this.setShopData()
+                })
         },
         getCategoryData () {
             const token = this.$session.get('tokenBearer')
@@ -216,6 +233,7 @@ export default {
         ...mapState({
             data: (state) => state.storeAuth.data,
             filterCategory: (state) => state.storeCategory.filter,
+            dataShop: (state) => state.storeSelectedShop.data
         }),
         dataUser () {
             return this.data && this.data.user

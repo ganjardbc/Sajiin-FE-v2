@@ -32,9 +32,10 @@ export default {
             },
             set (value) {
                 const shop_id = this.$route.params.shopId
+                const shop = this.data.find((item) => item.id === value)
                 this.$store.state.storeSelectedShop.selectedData = value
-                if (value !== shop_id) {
-                    this.$router.push({ name: 'shop-home', params: { shopId: value } })
+                if (shop.shop_id !== shop_id) {
+                    this.$router.push({ name: 'shop-home', params: { shopId: shop.shop_id } })
                 }
             }
         }

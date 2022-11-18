@@ -20,7 +20,7 @@ const routes = {
         {
             name: 'shop-home',
             path: 'home',
-            component: Home
+            component: Dashboard
         },
         {
             name: 'shop-dashboard',
