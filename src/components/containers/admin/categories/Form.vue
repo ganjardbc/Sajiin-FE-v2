@@ -21,16 +21,16 @@
                     </div>
                 </div>
                 <div class="field-group">
-                    <div class="field-label">Payment ID</div>
+                    <div class="field-label">Category ID</div>
                     <el-input 
                         placeholder=""
                         type="text"
-                        v-model="form.payment_id"
+                        v-model="form.category_id"
                         :disabled="true"></el-input>
                     <div 
-                        v-if="errorMessage.payment_id" 
+                        v-if="errorMessage.category_id" 
                         class="field-error">
-                        {{ errorMessage.payment_id && errorMessage.payment_id[0] }}
+                        {{ errorMessage.category_id && errorMessage.category_id[0] }}
                     </div>
                 </div>
                 <div class="field-group">
@@ -66,7 +66,7 @@
                 <div class="field-group">
                     <div class="field-label">Status</div>
                     <div class="display-flex space-between">
-                        <div class="fonts micro black">Is this payment still active ?</div>
+                        <div class="fonts micro black">Is this category still active ?</div>
                         <el-switch 
                             v-model="form.status"
                             :disabled="isDetailForm"
@@ -82,7 +82,7 @@
                 <div class="field-group">
                     <div class="field-label">Available</div>
                     <div class="display-flex space-between">
-                        <div class="fonts micro black">Is this payment still available ?</div>
+                        <div class="fonts micro black">Is this category still available ?</div>
                         <el-switch 
                             v-model="form.is_available"
                             :disabled="isDetailForm"
@@ -113,21 +113,21 @@ export default {
     mounted () {},
     computed: {
         ...mapState({
-            form: (state) => state.storePayment.form,
-            errorMessage: (state) => state.storePayment.errorMessage,
-            typeForm: (state) => state.storePayment.typeForm,
+            form: (state) => state.storeCategory.form,
+            errorMessage: (state) => state.storeCategory.errorMessage,
+            typeForm: (state) => state.storeCategory.typeForm,
         }),
         title () {
             let currentTitle = ''
             switch (this.typeForm) {
                 case 'create':
-                    currentTitle = 'Create Payment'
+                    currentTitle = 'Create Category'
                     break
                 case 'detail':
-                    currentTitle = 'Detail Payment'
+                    currentTitle = 'Detail Category'
                     break
                 case 'edit':
-                    currentTitle = 'Edit Payment'
+                    currentTitle = 'Edit Category'
                     break
             }
             return currentTitle
@@ -140,7 +140,7 @@ export default {
             return status
         },
         getCover () {
-            return this.form.image ? this.paymentImageThumbnailUrl + this.form.image : ''
+            return this.form.image ? this.categoryImageThumbnailUrl + this.form.image : ''
         }
     },
     components: {

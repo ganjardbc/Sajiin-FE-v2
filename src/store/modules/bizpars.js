@@ -3,10 +3,9 @@ import axios from 'axios'
 const defaultMessage = () => {
     return {
         id: '',
-        category_id: '',
-        image: '',
-        name: '',
-        status: '',
+        key: '',
+        value: '',
+        type: '',
         description: ''
     }
 }
@@ -14,10 +13,9 @@ const defaultMessage = () => {
 const defaultForm = () => {
     return {
         id: '',
-        category_id: '',
-        image: '',
-        name: '',
-        status: 'active',
+        key: '',
+        value: '',
+        type: '',
         description: ''
     }
 }
@@ -77,9 +75,7 @@ export default {
                 const time = new Date().getTime()
                 state.form = {
                     ...defaultForm(),
-                    category_id: `CT-${time}`,
-                    status: 'active',
-                    is_available: 1
+                    key: `BZ-${time}`
                 }
             }
         },
@@ -116,7 +112,7 @@ export default {
                 status: state.filter.status,
             }
 
-            return axios.post('/api/category/getAll', params, { 
+            return axios.post('/api/bizpar/getAll', params, { 
                     headers: { Authorization: data.token } 
                 })
                 .then((res) => {
@@ -145,7 +141,7 @@ export default {
                 ...data
             }
 
-            return axios.post('/api/category/post', params, { 
+            return axios.post('/api/bizpar/post', params, { 
                     headers: { Authorization: data.token } 
                 })
                 .then((res) => {
@@ -171,7 +167,7 @@ export default {
                 ...data
             }
 
-            return axios.post('/api/category/update', params, { 
+            return axios.post('/api/bizpar/update', params, { 
                     headers: { Authorization: data.token } 
                 })
                 .then((res) => {
@@ -197,7 +193,7 @@ export default {
                 ...data
             }
 
-            return axios.post('/api/category/delete', params, { 
+            return axios.post('/api/bizpar/delete', params, { 
                     headers: { Authorization: data.token } 
                 })
                 .then((res) => {
@@ -214,10 +210,10 @@ export default {
             commit('SET_LOADING_FORM', true)
     
             let params = new FormData()
-            params.append('category_id', data.category_id)
+            params.append('bizpar_id', data.bizpar_id)
             params.append('image', data.image)
     
-            return axios.post('/api/category/uploadImage', params, { 
+            return axios.post('/api/bizpar/uploadImage', params, { 
                     headers: { Authorization: data.token } 
                 })
                 .then((res) => {

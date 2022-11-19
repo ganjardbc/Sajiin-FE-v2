@@ -3,8 +3,7 @@ import axios from 'axios'
 const defaultMessage = () => {
     return {
         id: '',
-        category_id: '',
-        image: '',
+        permission_id: '',
         name: '',
         status: '',
         description: ''
@@ -14,8 +13,7 @@ const defaultMessage = () => {
 const defaultForm = () => {
     return {
         id: '',
-        category_id: '',
-        image: '',
+        permission_id: '',
         name: '',
         status: 'active',
         description: ''
@@ -77,9 +75,8 @@ export default {
                 const time = new Date().getTime()
                 state.form = {
                     ...defaultForm(),
-                    category_id: `CT-${time}`,
-                    status: 'active',
-                    is_available: 1
+                    permission_id: `PR-${time}`,
+                    status: 'active'
                 }
             }
         },
@@ -116,7 +113,7 @@ export default {
                 status: state.filter.status,
             }
 
-            return axios.post('/api/category/getAll', params, { 
+            return axios.post('/api/permission/getAll', params, { 
                     headers: { Authorization: data.token } 
                 })
                 .then((res) => {
@@ -145,7 +142,7 @@ export default {
                 ...data
             }
 
-            return axios.post('/api/category/post', params, { 
+            return axios.post('/api/permission/post', params, { 
                     headers: { Authorization: data.token } 
                 })
                 .then((res) => {
@@ -171,7 +168,7 @@ export default {
                 ...data
             }
 
-            return axios.post('/api/category/update', params, { 
+            return axios.post('/api/permission/update', params, { 
                     headers: { Authorization: data.token } 
                 })
                 .then((res) => {
@@ -197,7 +194,7 @@ export default {
                 ...data
             }
 
-            return axios.post('/api/category/delete', params, { 
+            return axios.post('/api/permission/delete', params, { 
                     headers: { Authorization: data.token } 
                 })
                 .then((res) => {
@@ -214,10 +211,10 @@ export default {
             commit('SET_LOADING_FORM', true)
     
             let params = new FormData()
-            params.append('category_id', data.category_id)
+            params.append('permission_id', data.permission_id)
             params.append('image', data.image)
     
-            return axios.post('/api/category/uploadImage', params, { 
+            return axios.post('/api/permission/uploadImage', params, { 
                     headers: { Authorization: data.token } 
                 })
                 .then((res) => {

@@ -373,7 +373,7 @@
 }
 
 .card-capsule {
-    padding: 4px 10px 0 10px;
+    padding: 4px 10px;
     border-radius: 20px;
     background-color: $white-grey;
     color: $light-grey;
@@ -383,6 +383,8 @@
     height: 18px;
     text-align: left;
     text-transform: capitalize;
+    box-sizing: unset; 
+    display: unset;
     &.no-height {
         height: auto;
     }

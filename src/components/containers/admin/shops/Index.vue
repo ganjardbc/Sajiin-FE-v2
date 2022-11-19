@@ -4,7 +4,7 @@
         :class="formClass ? 'content-form' : 'content-form hide'">
         <div class="left">
             <div class="display-flex space-between margin margin-bottom-15px">
-                <h1 class="fonts big black bold">Payments</h1>
+                <h1 class="fonts big black bold">Shops</h1>
                 <div class="display-flex">
                     <button 
                         class="btn btn-icon btn-white" 
@@ -17,7 +17,7 @@
                         <i class="fa fa-lw fa-plus" />
                     </button>
                     <SearchField 
-                        :placeholder="'Search payments ..'" 
+                        :placeholder="'Search shops ..'" 
                         :enableResponsive="true" 
                         :onChange="(data) => onSearch(data)" 
                         style="margin-left: 5px;" />
@@ -71,7 +71,7 @@
 
             <AppPopupConfirmed 
                 v-if="visibleConfirmedDelete"
-                :title="'Delete this payment ?'"
+                :title="'Delete this shop ?'"
                 @onClickNo="onClickNoDelete"
                 @onClickYes="onClickYesDelete"
             />
@@ -131,35 +131,35 @@ export default {
     },
     computed: {
         ...mapState({
-            filter: (state) => state.storePayment.filter,
-            form: (state) => state.storePayment.form,
-            data: (state) => state.storePayment.data,
-            totalRecord: (state) => state.storePayment.totalRecord,
-            limit: (state) => state.storePayment.limit,
-            loading: (state) => state.storePayment.loading,
-            loadingForm: (state) => state.storePayment.loadingForm,
-            typeForm: (state) => state.storePayment.typeForm
+            filter: (state) => state.storeShop.filter,
+            form: (state) => state.storeShop.form,
+            data: (state) => state.storeShop.data,
+            totalRecord: (state) => state.storeShop.totalRecord,
+            limit: (state) => state.storeShop.limit,
+            loading: (state) => state.storeShop.loading,
+            loadingForm: (state) => state.storeShop.loadingForm,
+            typeForm: (state) => state.storeShop.typeForm
         }),
         typeForm: {
             get () {
-                return this.$store.state.storePayment.typeForm
+                return this.$store.state.storeShop.typeForm
             },
             set (value) {
-                this.$store.state.storePayment.typeForm = value
+                this.$store.state.storeShop.typeForm = value
             }
         },
     },
     methods: {
         ...mapActions({
-            getPayment: 'storePayment/getData',
-            setPagination: 'storePayment/setPagination',
-            resetFormData: 'storePayment/resetFormData',
-            resetFilter: 'storePayment/resetFilter',
-            setFormData: 'storePayment/setFormData',
-            createData: 'storePayment/createData',
-            updateData: 'storePayment/updateData',
-            deleteData: 'storePayment/deleteData',
-            uploadCover: 'storePayment/uploadCover',
+            getShop: 'storeShop/getData',
+            setPagination: 'storeShop/setPagination',
+            resetFormData: 'storeShop/resetFormData',
+            resetFilter: 'storeShop/resetFilter',
+            setFormData: 'storeShop/setFormData',
+            createData: 'storeShop/createData',
+            updateData: 'storeShop/updateData',
+            deleteData: 'storeShop/deleteData',
+            uploadCover: 'storeShop/uploadCover',
         }),
         onSearch (data) {
             this.filter.search = data 
@@ -176,7 +176,7 @@ export default {
         // LIST DATA
         getData () {
             const token = this.$session.get('tokenBearer')
-            this.getPayment({ token })
+            this.getShop({ token })
         },
         handleCurrentChange (value) {
             this.setPagination(value)
@@ -211,7 +211,7 @@ export default {
                             this.getData()
                         } else {
                             this.visibleAlert = true 
-                            this.titleAlert = 'Failed to save this payment'
+                            this.titleAlert = 'Failed to save this shop'
                         }
                     })
                     break
@@ -226,7 +226,7 @@ export default {
                             this.getData()
                         } else {
                             this.visibleAlert = true 
-                            this.titleAlert = 'Failed to edit this payment'
+                            this.titleAlert = 'Failed to edit this shop'
                         }
                     })
                     break
@@ -238,10 +238,10 @@ export default {
             this.visibleConfirmed = true
             switch (this.typeForm) {
                 case 'create':
-                    this.titleConfirmed = 'Save this payment ?'
+                    this.titleConfirmed = 'Save this shop ?'
                     break
                 case 'edit':
-                    this.titleConfirmed = 'Edit this payment ?'
+                    this.titleConfirmed = 'Edit this shop ?'
                     break
             }
         },
@@ -289,7 +289,7 @@ export default {
                     this.getData()
                 } else {
                     this.visibleAlert = true 
-                    this.titleAlert = 'Failed to delete this payment'
+                    this.titleAlert = 'Failed to delete this shop'
                 }
             })
         },

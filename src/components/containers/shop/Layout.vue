@@ -124,7 +124,7 @@ const defaultSidebar = [
         icon: 'fa fa-lg fa-database', label: 'SHOP', value: 0, disableMenu: false, menu: [
             {icon: 'fa fa-lg fa-utensils', label: 'Products', value: 0, link: 'shop-products', permission: 'products'},
             {icon: 'fa fa-lg fa-th-large', label: 'Tables', value: 0, link: 'shop-tables', permission: 'tables'},
-            {icon: 'fa fa-lg fa-cogs', label: 'Settings', value: 0, link: 'shop-settings', permission: 'users'},
+            // {icon: 'fa fa-lg fa-cogs', label: 'Settings', value: 0, link: 'shop-settings', permission: 'users'},
         ]
     },
 ]

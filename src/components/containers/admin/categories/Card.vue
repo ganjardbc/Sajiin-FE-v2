@@ -15,7 +15,7 @@
                     <div class="image image-padding border border-full">
                         <img 
                             v-if="scope.row.image" 
-                            :src="paymentImageThumbnailUrl + scope.row.image" 
+                            :src="categoryImageThumbnailUrl + scope.row.image" 
                             alt="" 
                             class="post-center">
                         <i v-else class="post-middle-absolute icn fa fa-lg fa-image"></i>
@@ -99,7 +99,7 @@ export default {
     },
     computed: {
         ...mapState({
-            offset: (state) => state.storePayment.offset,
+            offset: (state) => state.storeCategory.offset,
         })
     },
     methods: {

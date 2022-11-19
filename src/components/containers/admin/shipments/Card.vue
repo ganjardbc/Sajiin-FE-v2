@@ -15,7 +15,7 @@
                     <div class="image image-padding border border-full">
                         <img 
                             v-if="scope.row.image" 
-                            :src="paymentImageThumbnailUrl + scope.row.image" 
+                            :src="shipmentImageThumbnaiUrl + scope.row.image" 
                             alt="" 
                             class="post-center">
                         <i v-else class="post-middle-absolute icn fa fa-lg fa-image"></i>

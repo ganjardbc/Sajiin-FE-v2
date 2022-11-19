@@ -4,6 +4,17 @@ const defaultDayLists = () => {
     return ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 }
 
+
+const defaultMessage = () => {
+    return {
+        id: '',
+        payment_id: '',
+        image: '',
+        name: '',
+        status: '',
+        description: ''
+    }
+}
 const defaultForm = () => {
     return {
         id: '',
@@ -20,7 +31,7 @@ export default {
 
     state: {
         form: defaultForm(),
-        errorMessage: defaultForm(),
+        errorMessage: defaultMessage(),
         dayLists: defaultDayLists(),
         limit: 5,
         offset: 0,
@@ -40,7 +51,7 @@ export default {
 
     mutations: {
         RESET_ERROR_MESSAGE (state) {
-            state.errorMessage = defaultForm()
+            state.errorMessage = defaultMessage()
         },
         SET_LOADING (state, value) {
             state.loading = value
@@ -61,7 +72,7 @@ export default {
             if (value) {
                 state.errorMessage = value 
             } else {
-                state.errorMessage = defaultForm() 
+                state.errorMessage = defaultMessage() 
             }
         },
         SET_FORM_DATA (state, value) {
@@ -80,7 +91,6 @@ export default {
         SET_TOTAL_RECORD (state, value) {
             state.totalRecord = value
         },
-
     },
 
     actions: {

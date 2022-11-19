@@ -30,9 +30,9 @@
                             @click="onOpenSidebar">
                             <i class="icn fa fa-lw fa-bars"></i>
                         </button>
-                        <!-- <button class="btn btn-white btn-circle margin margin-right-5px">
-                            <i class="icn icn-left fa fa-lw fa-power-off"></i> Logout
-                        </button> -->
+                        <router-link :to="{name: 'owner-home'}" class="btn btn-white btn-circle margin margin-right-5px">
+                            <i class="icn icn-left fa fa-lw fa-store"></i> Shops
+                        </router-link>
                     </div>
                     <div class="display-flex flex-end padding padding-left-15px padding-right-15px">
                         <div class="display-flex align-center padding padding-right-10px margin margin-right-10px border-right">
@@ -72,17 +72,16 @@ import AppCardProfile from '../../modules/AppCardProfile'
 const defaultSidebar = [
     {
         icon: 'fa fa-lg fa-database', label: 'MASTERDATA', value: 0, disableMenu: false, menu: [
-            {icon: 'fa fa-lg fa-key', label: 'Bizpars', value: 0, link: 'owner-home', permission: 'bizpars'},
-            {icon: 'fa fa-lg fa-store', label: 'Shops', value: 0, link: 'owner-home', permission: 'shops'},
-            {icon: 'fa fa-lg fa-calculator', label: 'Payments', value: 0, link: 'owner-home', permission: 'payments'},
-            {icon: 'fa fa-lg fa-box-open', label: 'Shipments', value: 0, link: 'owner-home', permission: 'shipments'},
-            {icon: 'fa fa-lg fa-list-ol', label: 'Categories', value: 0, link: 'owner-home', permission: 'categories'},
+            {icon: 'fa fa-lg fa-list', label: 'Bizpars', value: 0, link: 'admin-bizpars', permission: 'bizpars'},
+            {icon: 'fa fa-lg fa-calculator', label: 'Payments', value: 0, link: 'admin-payments', permission: 'payments'},
+            {icon: 'fa fa-lg fa-box-open', label: 'Shipments', value: 0, link: 'admin-shipments', permission: 'shipments'},
+            {icon: 'fa fa-lg fa-list-ol', label: 'Categories', value: 0, link: 'admin-categories', permission: 'categories'},
         ]
     },
     {
-        icon: 'fa fa-lg fa-database', label: 'OTHERS', value: 0, disableMenu: false, menu: [
-            {icon: 'fa fa-lg fa-users', label: 'Permissions', value: 0, link: 'owner-profile', permission: 'permissions'},
-            {icon: 'fa fa-lg fa-users', label: 'Roles', value: 0, link: 'owner-profile', permission: 'roles'},
+        icon: 'fa fa-lg fa-database', label: 'ROLE & RIGHTS', value: 0, disableMenu: false, menu: [
+            {icon: 'fa fa-lg fa-key', label: 'Permissions', value: 0, link: 'admin-permissions', permission: 'permissions'},
+            {icon: 'fa fa-lg fa-flag', label: 'Roles', value: 0, link: 'owner-profile', permission: 'roles'},
             {icon: 'fa fa-lg fa-users', label: 'Users', value: 0, link: 'owner-profile', permission: 'users'},
         ]
     },

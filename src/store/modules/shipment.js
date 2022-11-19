@@ -1,20 +1,24 @@
 import axios from 'axios'
 
+const defaultDayLists = () => {
+    return ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+}
+
+
 const defaultMessage = () => {
     return {
         id: '',
-        category_id: '',
+        shipment_id: '',
         image: '',
         name: '',
         status: '',
         description: ''
     }
 }
-
 const defaultForm = () => {
     return {
         id: '',
-        category_id: '',
+        shipment_id: '',
         image: '',
         name: '',
         status: 'active',
@@ -28,6 +32,7 @@ export default {
     state: {
         form: defaultForm(),
         errorMessage: defaultMessage(),
+        dayLists: defaultDayLists(),
         limit: 5,
         offset: 0,
         totalRecord: 0,
@@ -77,7 +82,7 @@ export default {
                 const time = new Date().getTime()
                 state.form = {
                     ...defaultForm(),
-                    category_id: `CT-${time}`,
+                    shipment_id: `SP-${time}`,
                     status: 'active',
                     is_available: 1
                 }
@@ -86,7 +91,6 @@ export default {
         SET_TOTAL_RECORD (state, value) {
             state.totalRecord = value
         },
-
     },
 
     actions: {
@@ -106,6 +110,7 @@ export default {
         },
         getData ({ commit, state }, data) {
             commit('SET_LOADING', true)
+            commit('SET_LOAD_MORE', false)
 
             let dataPrev = []
 
@@ -116,7 +121,7 @@ export default {
                 status: state.filter.status,
             }
 
-            return axios.post('/api/category/getAll', params, { 
+            return axios.post('/api/shipment/getAll', params, { 
                     headers: { Authorization: data.token } 
                 })
                 .then((res) => {
@@ -128,6 +133,12 @@ export default {
 
                     commit('SET_DATA', dataPrev)
                     commit('SET_TOTAL_RECORD', res.data.total_record)
+
+                    if (payload.length < state.limit) {
+                        commit('SET_LOAD_MORE', false)
+                    } else {
+                        commit('SET_LOAD_MORE', true)
+                    }
 
                     return res
                 })
@@ -145,7 +156,7 @@ export default {
                 ...data
             }
 
-            return axios.post('/api/category/post', params, { 
+            return axios.post('/api/shipment/post', params, { 
                     headers: { Authorization: data.token } 
                 })
                 .then((res) => {
@@ -171,7 +182,7 @@ export default {
                 ...data
             }
 
-            return axios.post('/api/category/update', params, { 
+            return axios.post('/api/shipment/update', params, { 
                     headers: { Authorization: data.token } 
                 })
                 .then((res) => {
@@ -197,7 +208,7 @@ export default {
                 ...data
             }
 
-            return axios.post('/api/category/delete', params, { 
+            return axios.post('/api/shipment/delete', params, { 
                     headers: { Authorization: data.token } 
                 })
                 .then((res) => {
@@ -214,10 +225,10 @@ export default {
             commit('SET_LOADING_FORM', true)
     
             let params = new FormData()
-            params.append('category_id', data.category_id)
+            params.append('shipment_id', data.shipment_id)
             params.append('image', data.image)
     
-            return axios.post('/api/category/uploadImage', params, { 
+            return axios.post('/api/shipment/uploadImage', params, { 
                     headers: { Authorization: data.token } 
                 })
                 .then((res) => {
@@ -230,5 +241,6 @@ export default {
                     commit('SET_LOADING_FORM', false)
                 })
         },
+
     }
 }

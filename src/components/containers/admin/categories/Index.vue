@@ -4,7 +4,7 @@
         :class="formClass ? 'content-form' : 'content-form hide'">
         <div class="left">
             <div class="display-flex space-between margin margin-bottom-15px">
-                <h1 class="fonts big black bold">Payments</h1>
+                <h1 class="fonts big black bold">Categories</h1>
                 <div class="display-flex">
                     <button 
                         class="btn btn-icon btn-white" 
@@ -17,7 +17,7 @@
                         <i class="fa fa-lw fa-plus" />
                     </button>
                     <SearchField 
-                        :placeholder="'Search payments ..'" 
+                        :placeholder="'Search categories ..'" 
                         :enableResponsive="true" 
                         :onChange="(data) => onSearch(data)" 
                         style="margin-left: 5px;" />
@@ -71,7 +71,7 @@
 
             <AppPopupConfirmed 
                 v-if="visibleConfirmedDelete"
-                :title="'Delete this payment ?'"
+                :title="'Delete this category ?'"
                 @onClickNo="onClickNoDelete"
                 @onClickYes="onClickYesDelete"
             />
@@ -131,35 +131,35 @@ export default {
     },
     computed: {
         ...mapState({
-            filter: (state) => state.storePayment.filter,
-            form: (state) => state.storePayment.form,
-            data: (state) => state.storePayment.data,
-            totalRecord: (state) => state.storePayment.totalRecord,
-            limit: (state) => state.storePayment.limit,
-            loading: (state) => state.storePayment.loading,
-            loadingForm: (state) => state.storePayment.loadingForm,
-            typeForm: (state) => state.storePayment.typeForm
+            filter: (state) => state.storeCategory.filter,
+            form: (state) => state.storeCategory.form,
+            data: (state) => state.storeCategory.data,
+            totalRecord: (state) => state.storeCategory.totalRecord,
+            limit: (state) => state.storeCategory.limit,
+            loading: (state) => state.storeCategory.loading,
+            loadingForm: (state) => state.storeCategory.loadingForm,
+            typeForm: (state) => state.storeCategory.typeForm
         }),
         typeForm: {
             get () {
-                return this.$store.state.storePayment.typeForm
+                return this.$store.state.storeCategory.typeForm
             },
             set (value) {
-                this.$store.state.storePayment.typeForm = value
+                this.$store.state.storeCategory.typeForm = value
             }
         },
     },
     methods: {
         ...mapActions({
-            getPayment: 'storePayment/getData',
-            setPagination: 'storePayment/setPagination',
-            resetFormData: 'storePayment/resetFormData',
-            resetFilter: 'storePayment/resetFilter',
-            setFormData: 'storePayment/setFormData',
-            createData: 'storePayment/createData',
-            updateData: 'storePayment/updateData',
-            deleteData: 'storePayment/deleteData',
-            uploadCover: 'storePayment/uploadCover',
+            getCategory: 'storeCategory/getData',
+            setPagination: 'storeCategory/setPagination',
+            resetFormData: 'storeCategory/resetFormData',
+            resetFilter: 'storeCategory/resetFilter',
+            setFormData: 'storeCategory/setFormData',
+            createData: 'storeCategory/createData',
+            updateData: 'storeCategory/updateData',
+            deleteData: 'storeCategory/deleteData',
+            uploadCover: 'storeCategory/uploadCover',
         }),
         onSearch (data) {
             this.filter.search = data 
@@ -176,7 +176,7 @@ export default {
         // LIST DATA
         getData () {
             const token = this.$session.get('tokenBearer')
-            this.getPayment({ token })
+            this.getCategory({ token })
         },
         handleCurrentChange (value) {
             this.setPagination(value)
@@ -211,7 +211,7 @@ export default {
                             this.getData()
                         } else {
                             this.visibleAlert = true 
-                            this.titleAlert = 'Failed to save this payment'
+                            this.titleAlert = 'Failed to save this category'
                         }
                     })
                     break
@@ -226,7 +226,7 @@ export default {
                             this.getData()
                         } else {
                             this.visibleAlert = true 
-                            this.titleAlert = 'Failed to edit this payment'
+                            this.titleAlert = 'Failed to edit this category'
                         }
                     })
                     break
@@ -238,10 +238,10 @@ export default {
             this.visibleConfirmed = true
             switch (this.typeForm) {
                 case 'create':
-                    this.titleConfirmed = 'Save this payment ?'
+                    this.titleConfirmed = 'Save this category ?'
                     break
                 case 'edit':
-                    this.titleConfirmed = 'Edit this payment ?'
+                    this.titleConfirmed = 'Edit this category ?'
                     break
             }
         },
@@ -289,7 +289,7 @@ export default {
                     this.getData()
                 } else {
                     this.visibleAlert = true 
-                    this.titleAlert = 'Failed to delete this payment'
+                    this.titleAlert = 'Failed to delete this category'
                 }
             })
         },

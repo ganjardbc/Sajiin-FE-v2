@@ -21,6 +21,7 @@ import storeDashboard from './modules/dashboard'
 import storeShop from './modules/shop'
 import storeSelectedShop from './modules/selectedShop'
 import storePayment from './modules/payment'
+import storeShipment from './modules/shipment'
 import storeTable from './modules/table'
 import storeCategory from './modules/category'
 import storeProduct from './modules/product'
@@ -33,6 +34,8 @@ import storeCashierCategory from './modules/cashier/category'
 import storeCashierProduct from './modules/cashier/product'
 import storeCashierTable from './modules/cashier/table'
 import storeCashierPayment from './modules/cashier/payment'
+import storeBizpars from './modules/bizpars'
+import storePermissions from './modules/permissions'
 
 Vue.use(Vuex)
 
@@ -45,6 +48,7 @@ export default new Vuex.Store({
     storeShop,
     storeSelectedShop,
     storePayment,
+    storeShipment,
     storeTable,
     storeCategory,
     storeProduct,
@@ -57,6 +61,8 @@ export default new Vuex.Store({
     storeCashierProduct,
     storeCashierTable,
     storeCashierPayment,
+    storeBizpars,
+    storePermissions,
 
     // old store
     auth,

@@ -10,24 +10,6 @@
                 width="60"
                 :index="indexMethod">
             </el-table-column>
-            <el-table-column width="100">
-                <template slot-scope="scope">
-                    <div class="image image-padding border border-full">
-                        <img 
-                            v-if="scope.row.image" 
-                            :src="paymentImageThumbnailUrl + scope.row.image" 
-                            alt="" 
-                            class="post-center">
-                        <i v-else class="post-middle-absolute icn fa fa-lg fa-image"></i>
-                        <button 
-                            class="btn btn-sekunder btn-small-icon btn-circle" 
-                            style="position: absolute; bottom: 5px; right: 5px;" 
-                            @click="onChangeCover(scope.row)">
-                            <i class="post-center fonts fonts-11 grey fa fa-lg fa-camera" />
-                        </button>
-                    </div>
-                </template>
-            </el-table-column>
             <el-table-column
                 prop="name"
                 label="Name"
@@ -53,11 +35,6 @@
                         width="180"
                         trigger="click">
                         <div class="width width-100">
-                            <button 
-                                class="btn btn-white btn-full btn-align-left"
-                                @click="onChangeCover(scope.row)">
-                                <i class="icn icn-left fa fa-lg fa-camera"></i> Change Cover
-                            </button>
                             <button 
                                 class="btn btn-white btn-full btn-align-left"
                                 @click="onDetail(scope.row)">
@@ -99,7 +76,7 @@ export default {
     },
     computed: {
         ...mapState({
-            offset: (state) => state.storePayment.offset,
+            offset: (state) => state.storeCategory.offset,
         })
     },
     methods: {
