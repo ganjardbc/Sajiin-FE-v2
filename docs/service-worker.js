@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/Sajiin-FE-v2/precache-manifest.7432773c3d3d85886e089d8767ea7761.js"
+  "/Sajiin-FE-v2/#/precache-manifest.c0b452ea3cbe7c4fd9e517c016233f6c.js"
 );
 
 workbox.core.skipWaiting();
