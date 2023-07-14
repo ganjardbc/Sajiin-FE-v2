@@ -1,0 +1,33 @@
+{
+    "name": "Sajiin",
+    "short_name": "Sajiin",
+    "description": "Serve All You Want",
+    "icons": [
+      {
+        "src": "/static/img/circle-icon/128x128.png",
+        "sizes": "128x128",
+        "type": "image/png"
+      },
+      {
+        "src": "/static/img/circle-icon/192x192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "/static/img/circle-icon/256x256.png",
+        "sizes": "256x256",
+        "type": "image/png"
+      },
+      {
+        "src": "/static/img/circle-icon/512x512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ],
+    "start_url": "/",
+    "scope": "/",
+    "display": "fullscreen",
+    "orientation": "portrait",
+    "background_color": "#FFFFFF",
+    "theme_color": "#FFFFFF"
+  }
