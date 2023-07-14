@@ -74,7 +74,6 @@ const defaultSidebar = [
         icon: 'fa fa-lg fa-database', label: 'MASTERDATA', value: 0, disableMenu: false, menu: [
             {icon: 'fa fa-lg fa-list', label: 'Bizpars', value: 0, link: 'admin-bizpars', permission: 'bizpars'},
             {icon: 'fa fa-lg fa-calculator', label: 'Payments', value: 0, link: 'admin-payments', permission: 'payments'},
-            // {icon: 'fa fa-lg fa-building', label: 'Positions', value: 0, link: 'admin-positions', permission: 'employees'},
         ]
     },
     {

@@ -93,10 +93,7 @@ export default {
         },
         onCheckBluetooth () {
             navigator.bluetooth.getAvailability().then((available) => {
-                if (available) {
-                    this.$message('This device supports Bluetooth !')
-                    this.setBluetoothSupported(true)
-                } else {
+                if (!available) {
                     this.$message({
                         message: 'Oops ! Bluetooth is not supported.',
                         type: 'error'
@@ -111,18 +108,18 @@ export default {
         this.setUpNewUpdate()
         this.onCheckBluetooth()
     },
-    sockets: {
-        connect: function () {
-            this.$message('Your are connected')
-            this.addUserSocket()
-        },
-        disconnect: function () {
-            this.$message({
-                message: 'Your are disconnected',
-                type: 'error'
-            })
-        },
-    }
+    // sockets: {
+    //     connect: function () {
+    //         this.$message('Your are connected')
+    //         this.addUserSocket()
+    //     },
+    //     disconnect: function () {
+    //         this.$message({
+    //             message: 'Your are disconnected',
+    //             type: 'error'
+    //         })
+    //     },
+    // }
 }
 </script>
 <style>

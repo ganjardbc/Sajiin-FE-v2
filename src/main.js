@@ -11,8 +11,8 @@ import store from './store'
 import {formatCurrency, fieldCurrency, getCashbookList} from './services/utils'
 import SmartTable from 'vuejs-smart-table'
 import jquery from 'jquery'
-import VueSocketIO from 'vue-socket.io'
-import SocketIo from 'socket.io-client'
+// import VueSocketIO from 'vue-socket.io'
+// import SocketIo from 'socket.io-client'
 import VueQrcodeReader from "vue-qrcode-reader"
 import VueApexCharts from 'vue-apexcharts'
 import VueCarousel from 'vue-carousel'
@@ -66,10 +66,10 @@ Vue.use(VueRouter)
 Vue.use(VueAxios, axios)
 Vue.use(VueCookies)
 Vue.use(SmartTable)
-Vue.use(new VueSocketIO({
-    debug: true,
-    connection: SocketIo(socket)
-}))
+// Vue.use(new VueSocketIO({
+//     debug: true,
+//     connection: SocketIo(socket)
+// }))
 
 Vue.component('apexchart', VueApexCharts)
 

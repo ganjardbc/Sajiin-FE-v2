@@ -1,6 +1,4 @@
 import Layout from '@/components/containers/admin/Layout'
-import Profile from '@/components/containers/user/profile/Index'
-import Settings from '@/components/containers/user/settings/Index'
 import Home from '@/components/containers/admin/Index'
 import Bizpars from '@/components/containers/admin/bizpars/Index'
 import Payments from '@/components/containers/admin/payments/Index'
@@ -13,16 +11,12 @@ import Shops from '@/components/containers/admin/shops/Index'
 import Permissions from '@/components/containers/admin/permissions/Index'
 import Roles from '@/components/containers/admin/roles/Index'
 import Users from '@/components/containers/admin/users/Index'
+import Settings from '@/components/containers/admin/settings/Index'
 
 const routes = {
     path: '/admin',
     component: Layout,
     children: [
-        {
-            name: 'admin-profile',
-            path: 'profile',
-            component: Profile
-        },
         {
             name: 'admin-settings',
             path: 'settings',

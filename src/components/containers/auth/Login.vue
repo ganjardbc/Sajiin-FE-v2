@@ -58,15 +58,6 @@
 
                 <button class="btn btn-full btn-main" :disabled="isButtonDisabled">Login</button>
 
-                <div class="width width-100">
-                    <div class="display-flex center padding padding-top-15px">
-                        <div class="fonts fonts-11 black align-center">Or</div>
-                    </div>
-                    <div class="display-flex center padding padding-top-10px">
-                        <router-link :to="{name: 'visitor-qrscanner'}" class="fonts fonts-11 red semibold align-center">QR Code Scanner</router-link>
-                    </div>
-                </div>
-
                 <div class="display-flex center padding padding-top-30px">
                     <div class="fonts fonts-10 grey align-center">App Version 1.0.0</div>
                 </div>
@@ -134,15 +125,17 @@ export default {
                 this.$cookies.set('employee', data.employee)
                 this.$cookies.set('permissions', JSON.stringify(data.permissions))
 
-                if (data.user.role_name === 'admin') {
-                    this.$router.replace('/admin/home')
-                }
-                else if (data.user.role_name === 'owner') {
-                    this.$router.replace('/owner/home')
-                }
-                else {
-                    this.$router.replace('/employee/home')
-                }
+                this.$router.replace('/admin/home')
+
+                // if (data.user.role_name === 'admin') {
+                //     this.$router.replace('/admin/home')
+                // }
+                // else if (data.user.role_name === 'owner') {
+                //     this.$router.replace('/owner/home')
+                // }
+                // else {
+                //     this.$router.replace('/employee/home')
+                // }
             }
         }
     },
