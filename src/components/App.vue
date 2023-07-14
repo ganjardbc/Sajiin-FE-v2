@@ -80,17 +80,17 @@ export default {
                 }
             }
         },
-        setUpNewUpdate () {
-            if (this.$workbox) {
-                this.$workbox.addEventListener("installed", (event) => {
-                    if (event.isUpdate) {
-                        this.setUpdateApplication(true)
-                    } else {
-                        this.setUpdateApplication(false)
-                    }
-                })
-            }
-        },
+        // setUpNewUpdate () {
+        //     if (this.$workbox) {
+        //         this.$workbox.addEventListener("installed", (event) => {
+        //             if (event.isUpdate) {
+        //                 this.setUpdateApplication(true)
+        //             } else {
+        //                 this.setUpdateApplication(false)
+        //             }
+        //         })
+        //     }
+        // },
         onCheckBluetooth () {
             navigator.bluetooth.getAvailability().then((available) => {
                 if (!available) {
@@ -105,7 +105,7 @@ export default {
     },
     mounted () {
         this.setUpNotification()
-        this.setUpNewUpdate()
+        // this.setUpNewUpdate()
         this.onCheckBluetooth()
     },
     // sockets: {
