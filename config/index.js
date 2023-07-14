@@ -43,7 +43,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../docs'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/Sajiin-FE-v2/',
+    assetsPublicPath: '/Sajiin-FE-v2/#/',
 
     /**
      * Source Maps

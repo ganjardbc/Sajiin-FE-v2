@@ -112,7 +112,7 @@ Vue.prototype.shiftImageThumbnailUrl = api + '/contents/shifts/thumbnails/'
 Vue.prototype.shiftImageCoverUrl = api + '/contents/shifts/covers/'
 
 const router = new VueRouter({
-    mode: 'history',
+    // mode: 'history',
     routes: routes,
     base: '/',
     scrollBehavior(to, from, savedPosition) {
